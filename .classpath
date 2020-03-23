@@ -2,5 +2,8 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="lib"/>
+	<classpathentry kind="lib" path="/home/arte/cobis/Naiguata/lib/commons-net-1.4.1.jar"/>
+	<classpathentry kind="lib" path="/home/arte/cobis/Naiguata/lib/commons-net-3.6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

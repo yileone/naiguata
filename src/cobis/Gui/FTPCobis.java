@@ -20,7 +20,7 @@ private static Propiedades propiedades;
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		if (args.length>1)
+		if (args.length!=1)
 		{
 			System.out.println(error);
 		}
