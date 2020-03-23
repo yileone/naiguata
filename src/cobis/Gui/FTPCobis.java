@@ -48,7 +48,7 @@ private static void cargarPropiedades() {
 	}
 private static void mostrarPropiedades() {
 		// TODO Auto-generated method stub
-		
+		propiedades.mostrarAtributos();
 	}
 /**
  * Muestra todos los menús con sus opciones de ejecucion
