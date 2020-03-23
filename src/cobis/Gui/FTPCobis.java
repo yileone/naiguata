@@ -4,13 +4,16 @@
  */
 package cobis.Gui;
 
+import archivos.*;
+
 /**
  * @author a
  *
  */
 public class FTPCobis {
 
-private static String error="la opción no es válida ejecute el parametro -? para mostrar la ayuda"; 
+private static String error="la opción no es válida ejecute el parametro -? para mostrar la ayuda";
+private static Propiedades propiedades; 
 
 	/**
 	 * @param args
@@ -21,8 +24,9 @@ private static String error="la opción no es válida ejecute el parametro -? pa
 		{
 			System.out.println(error);
 		}
-		else if (args[0].equals("-?")) {
-			mostrarAyuda();
+		else if (args[0].equals("-P")) {
+			cargarPropiedades();
+			mostrarPropiedades();
 		}else if (args[0].equals("-?")) {
 			mostrarAyuda();
 		}else if (args[0].equals("-?")) {
@@ -36,6 +40,14 @@ private static String error="la opción no es válida ejecute el parametro -? pa
 		}else  {
 			System.out.println(error);
 		}
+		
+	}
+private static void cargarPropiedades() {
+		// TODO Auto-generated method stub
+	    propiedades= new Propiedades();
+	}
+private static void mostrarPropiedades() {
+		// TODO Auto-generated method stub
 		
 	}
 /**
