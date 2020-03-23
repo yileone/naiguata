@@ -41,7 +41,7 @@ private static String error="la opción no es válida ejecute el parametro -? pa
 /**
  * Muestra todos los menús con sus opciones de ejecucion
  */
-	private static void mostrarAyuda() {
+	public static void mostrarAyuda() {
 		// TODO Auto-generated method stub
 		System.out.println("********************************");
 		System.out.println("***FtP Cobis - Naiguata V1.0****");
