@@ -41,15 +41,16 @@ public class Propiedades {
 	public Propiedades(String archivo) {
 		// TODO Auto-generated constructor stub
 		propiedades= new Properties();
-		setCarpEntrada(propiedades.getProperty("carpeta.Entrada"));
-		setCarpHistEnt(propiedades.getProperty("carpeta.HistEntrada"));
-		setCarpSalida(propiedades.getProperty("carpeta.Salida"));
-		setCarpHistSal(propiedades.getProperty("carpeta.HistSalida"));
-		setClave(propiedades.getProperty("servidor.clave"));
-		setServidorFtp(propiedades.getProperty("servidor.FTP","localhost"));
-		setLogin(propiedades.getProperty("servidor.login"));
 		try {
 			propiedades.load(new FileInputStream(archivo));
+
+			setCarpEntrada(propiedades.getProperty("carpeta.Entrada"));
+			setCarpHistEnt(propiedades.getProperty("carpeta.HistEntrada"));
+			setCarpSalida(propiedades.getProperty("carpeta.Salida"));
+			setCarpHistSal(propiedades.getProperty("carpeta.HistSalida"));
+			setClave(propiedades.getProperty("servidor.clave"));
+			setServidorFtp(propiedades.getProperty("servidor.FTP","localhost"));
+			setLogin(propiedades.getProperty("servidor.login"));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			System.out.println("el archivo no existe");
