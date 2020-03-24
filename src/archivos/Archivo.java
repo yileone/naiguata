@@ -102,48 +102,54 @@ public class Archivo {
 	 * @throws IOException
 	 */
 	public  void paseHistorico() throws IOException {
-        copy(this.propiedades.getCarpEntrada(), this.propiedades.getCarpHistEnt());
-        copy(this.propiedades.getCarpSalida(), this.propiedades.getCarpHistSal());
-        //borrardirectorio(this.propiedades.getCarpEntrada());
-        //borrardirectorio(this.propiedades.getCarpSalida());
+        if (copy(this.propiedades.getCarpEntrada(), this.propiedades.getCarpHistEnt()))
+        {
+        	borrardirectorio(new File(propiedades.getCarpEntrada()));
+            	
+        }
+        if (copy(this.propiedades.getCarpSalida(), this.propiedades.getCarpHistSal()))
+        {
+        	borrardirectorio(new File(propiedades.getCarpSalida()));
+        }
 	}
 	/**
 	 * 
 	 * @param directorio
 	 */
-	public void borrardirectorio(String directorio)
+	public void borrardirectorio(File directorio)
 	{
-		File f = new File(directorio);
+		File f = directorio;
 		if (f.isDirectory())
 		{
 			for (String file : f.list()) {
-	            borrardirectorio(file);
+	            borrardirectorio(new File(f,file));
 				            
 	        }	
 		}
 		else
-		{
+		{ 
 			if (f.delete())
-				  System.out.println("El directorio " + directorio + " ha sido borrado correctamente");
+				  System.out.println("El archivo " + directorio + " ha sido borrado correctamente");
 				else
-				  System.out.println("El directorio " + directorio + " no se ha podido borrar");
-		}
-		
+				  System.out.println("El archivo " + directorio + " no se ha podido borrar");
+		}	
 	}
-	
 	
 	/**
 	 * 
 	 * @param sourceLocation
 	 * @param targetLocation
+	 * @return
 	 * @throws IOException
 	 */
-	private  void copy(File sourceLocation, File targetLocation) throws IOException {
-        if (sourceLocation.isDirectory()) {
-            copyDirectory(sourceLocation, targetLocation);
+	private  boolean copy(File sourceLocation, File targetLocation) throws IOException {
+        boolean resp =true;
+		if (sourceLocation.isDirectory()) {
+			resp=resp && copyDirectory(sourceLocation, targetLocation);
         } else {
-            copyFile(sourceLocation,targetLocation);
+        	resp=resp && copyFile(sourceLocation,targetLocation);
         }
+		return resp;
     }	
 
 	
@@ -153,21 +159,24 @@ public class Archivo {
 	 * 
 	 * @param sSourceLocation
 	 * @param stargetLocation
+	 * @return
 	 * @throws IOException
 	 */
-     private void copy(String sSourceLocation, String stargetLocation) throws IOException {         
+     private boolean copy(String sSourceLocation, String stargetLocation) throws IOException {         
          File sourceLocation = new File(sSourceLocation);
          File targetLocation = new File(stargetLocation);
-
+         boolean resp=true;
         if (sourceLocation.isDirectory()) { //Es directorio.
-            copyDirectory(sourceLocation, targetLocation);
+            
+        	resp=resp&&  copyDirectory(sourceLocation, targetLocation);
         } else { //Es archivo.
             targetLocation = new File(fecha() +stargetLocation);
-            copyFile(sourceLocation, targetLocation);
+            resp=resp && copyFile(sourceLocation, targetLocation);
         }
+        return resp;
     }
      /**
-      * f
+      * 
       * @return fecha actual
       */
      public String fecha() {
@@ -186,25 +195,29 @@ public class Archivo {
  * 
  * @param source
  * @param target
+ * @return un valor si la copia fue efectiva
  * @throws IOException
  */
-    private  void copyDirectory(File source, File target) throws IOException {
-        if (!target.exists()) {
+    private  boolean copyDirectory(File source, File target) throws IOException {
+        boolean resp=true;
+    	if (!target.exists()) {
             //No existe directorio destino, lo crea.
             target.mkdir();
         }
         for (String f : source.list()) {
             //Copia archivos de directorio fuente a destino.
-            copy(new File(source, f), new File(target, f));
+            resp=resp&& copy(new File(source, f), new File(target, f));
         }
+        return resp;
     }
 /**
- * 
+ * copia el archivo y lo renombra con su prefijo historico
  * @param source
  * @param target
+ * @return boolean si fue efectiva la copia
  * @throws IOException
  */
-    private  void copyFile(File source, File target) throws IOException {
+    private  boolean copyFile(File source, File target) throws IOException {
  
     	try (
             InputStream in = new FileInputStream(source);
@@ -217,8 +230,12 @@ public class Archivo {
             File parent = target.getParentFile();
     	    String filename = fecha()+target.getName();
     	    target.renameTo(new File(parent, filename));
-    	   
+    	    return true;
         }
+    	catch (Exception e) {
+    		System.out.println(e.getMessage());
+    		return false;
+		}
     }
 
 }
