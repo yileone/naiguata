@@ -4,6 +4,8 @@
  */
 package cobis.Gui;
 
+import java.io.IOException;
+
 import archivos.Archivo;
 import archivos.Propiedades;
 import conexion.FtpNaiguata;
@@ -68,7 +70,7 @@ public class FTPCobis {
 		System.out.println("* -O obtiene el archivo de entrada del servidor FTP *");
 		System.out.println("* -T prueba la conexion con el servidor FTP *");
 		System.out.println("* -C carga el archivo de salida al servidor FTP *");
-		System.out.println("*  ? la ayuda que esta leyendo *");
+		System.out.println("* -H Pase a histórico  *");
 		System.out.println("********************************");
 
 	}
@@ -92,8 +94,14 @@ public class FTPCobis {
 	}
 
 	private static void pasarHistorico() {
-		// TODO Auto-generated method stub
-
+		cargarPropiedades();
+		final Archivo archivo = new Archivo(propiedades, 'S');
+		try {
+			archivo.paseHistorico();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**

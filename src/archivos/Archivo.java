@@ -9,6 +9,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.channels.FileChannel;
+import java.util.Calendar;
 
 /**
  * ARchivo leido , de tipo entrada o salida.
@@ -95,16 +97,55 @@ public class Archivo {
 		this.tipo = tipo;
 	}
 	
+	/**
+	 * 
+	 * @throws IOException
+	 */
+	public  void paseHistorico() throws IOException {
+        copy(this.propiedades.getCarpEntrada(), this.propiedades.getCarpHistEnt());
+        copy(this.propiedades.getCarpSalida(), this.propiedades.getCarpHistSal());
+        //borrardirectorio(this.propiedades.getCarpEntrada());
+        //borrardirectorio(this.propiedades.getCarpSalida());
+	}
+	/**
+	 * 
+	 * @param directorio
+	 */
+	public void borrardirectorio(String directorio)
+	{
+		File f = new File(directorio);
+		if (f.isDirectory())
+		{
+			for (String file : f.list()) {
+	            borrardirectorio(file);
+				            
+	        }	
+		}
+		else
+		{
+			if (f.delete())
+				  System.out.println("El directorio " + directorio + " ha sido borrado correctamente");
+				else
+				  System.out.println("El directorio " + directorio + " no se ha podido borrar");
+		}
+		
+	}
 	
-	public static void copy(File sourceLocation, File targetLocation) throws IOException {
+	
+	/**
+	 * 
+	 * @param sourceLocation
+	 * @param targetLocation
+	 * @throws IOException
+	 */
+	private  void copy(File sourceLocation, File targetLocation) throws IOException {
         if (sourceLocation.isDirectory()) {
             copyDirectory(sourceLocation, targetLocation);
         } else {
-            copyFile(sourceLocation, targetLocation);
+            copyFile(sourceLocation,targetLocation);
         }
-    }
+    }	
 
-	
 	
 	
 	
@@ -114,23 +155,40 @@ public class Archivo {
 	 * @param stargetLocation
 	 * @throws IOException
 	 */
-     public static void copy(String sSourceLocation, String stargetLocation) throws IOException {         
+     private void copy(String sSourceLocation, String stargetLocation) throws IOException {         
          File sourceLocation = new File(sSourceLocation);
          File targetLocation = new File(stargetLocation);
 
         if (sourceLocation.isDirectory()) { //Es directorio.
             copyDirectory(sourceLocation, targetLocation);
         } else { //Es archivo.
+            targetLocation = new File(fecha() +stargetLocation);
             copyFile(sourceLocation, targetLocation);
         }
     }
+     /**
+      * f
+      * @return fecha actual
+      */
+     public String fecha() {
+ 		String fecha = "";
+ 		Calendar c=Calendar.getInstance();
+ 		fecha = fecha + 
+ 				c.get(Calendar.YEAR) + 
+ 				c.get(Calendar.MONTH)+
+ 				c.get(Calendar.DATE) + "-"+ 
+ 				c.get(Calendar.HOUR_OF_DAY) + 
+ 				c.get(Calendar.MINUTE)
+ 				+ c.get(Calendar.SECOND);
+ 		return fecha;
+ 	}
 /**
  * 
  * @param source
  * @param target
  * @throws IOException
  */
-    private static void copyDirectory(File source, File target) throws IOException {
+    private  void copyDirectory(File source, File target) throws IOException {
         if (!target.exists()) {
             //No existe directorio destino, lo crea.
             target.mkdir();
@@ -146,8 +204,9 @@ public class Archivo {
  * @param target
  * @throws IOException
  */
-    private static void copyFile(File source, File target) throws IOException {
-        try (
+    private  void copyFile(File source, File target) throws IOException {
+ 
+    	try (
             InputStream in = new FileInputStream(source);
             OutputStream out = new FileOutputStream(target)) {
             byte[] buffer = new byte[1024];
@@ -155,6 +214,10 @@ public class Archivo {
             while ((length = in.read(buffer)) > 0) {
                 out.write(buffer, 0, length);
             }
+            File parent = target.getParentFile();
+    	    String filename = fecha()+target.getName();
+    	    target.renameTo(new File(parent, filename));
+    	   
         }
     }
 

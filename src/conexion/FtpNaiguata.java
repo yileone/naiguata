@@ -59,13 +59,7 @@ public class FtpNaiguata {
 		}
 	}
 
-	public String fecha() {
-		String fecha = "";
-		Calendar.getInstance();
-		fecha = fecha + Calendar.YEAR + Calendar.MONTH + Calendar.DATE + Calendar.HOUR + Calendar.MINUTE
-				+ Calendar.SECOND;
-		return fecha;
-	}
+	
 
 	/**
 	 * @return the archivo
