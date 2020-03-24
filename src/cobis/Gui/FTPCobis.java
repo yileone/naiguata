@@ -28,7 +28,6 @@ public class FTPCobis {
 	}
 
 	private static void cargarPropiedades() {
-		// TODO Auto-generated method stub
 		propiedades = new Propiedades();
 	}
 
@@ -36,7 +35,6 @@ public class FTPCobis {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		if (args.length != 1) {
 			System.out.println(error);
 		} else if (args[0].equals("-P")) {
@@ -48,8 +46,8 @@ public class FTPCobis {
 			probarConexion();
 		} else if (args[0].equals("-C")) {
 			cargarArchivo();
-		} else if (args[0].equals("-?")) {
-			mostrarAyuda();
+		} else if (args[0].equals("-H")) {
+			pasarHistorico();
 		} else if (args[0].equals("-?")) {
 			mostrarAyuda();
 		} else {
@@ -62,7 +60,6 @@ public class FTPCobis {
 	 * Muestra todos los menús con sus opciones de ejecucion
 	 */
 	public static void mostrarAyuda() {
-		// TODO Auto-generated method stub
 		System.out.println("********************************");
 		System.out.println("***FtP Cobis - Naiguata V1.0****");
 		System.out.println("********************************");
@@ -77,7 +74,6 @@ public class FTPCobis {
 	}
 
 	private static void mostrarPropiedades() {
-		// TODO Auto-generated method stub
 		propiedades.mostrarAtributos();
 	}
 
@@ -85,7 +81,6 @@ public class FTPCobis {
 	 * Obtiene archivo del servidor FtP
 	 */
 	private static void obtenerArchivo() {
-		// TODO Auto-generated method stub
 		cargarPropiedades();
 		final Archivo archivo = new Archivo(propiedades, 'E');
 		final FtpNaiguata conexion = new FtpNaiguata(archivo);
@@ -94,6 +89,11 @@ public class FTPCobis {
 			conexion.cerrar();
 
 		}
+	}
+
+	private static void pasarHistorico() {
+		// TODO Auto-generated method stub
+
 	}
 
 	/**

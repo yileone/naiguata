@@ -117,7 +117,7 @@ public class FtpNaiguata {
 			outputStream.close();
 
 			if (success) {
-				System.out.println("File " + nombreArchivo + " ha sido descargado exitosamente.");
+				System.out.println("Archivo " + nombreArchivo + " ha sido descargado exitosamente.");
 			}
 
 		} catch (final FileNotFoundException e) {
@@ -162,7 +162,7 @@ public class FtpNaiguata {
 			if (sucess == false) {
 				throw new Exception("Error al subir el fichero");
 			} else {
-				System.out.println("File " + uploadFile + " ha sido cargado exitosamente.");
+				System.out.println("Archivo " + uploadFile + " ha sido cargado exitosamente.");
 
 			}
 		} catch (final Exception eFTPClient) {
