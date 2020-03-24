@@ -1,19 +1,30 @@
 /**
- * 
+ *
  */
 package archivos;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
 
-import java.util.*;
 /**
  * Clase que procesa archivo tipo Properties
- * @author yisheng 
+ *
+ * @author yisheng
  *
  */
 public class Propiedades {
 
-	static private String archivoDefecto="FtpCobis.properties";
+	static private String archivoDefecto = "FtpCobis.properties";
+
+	/**
+	 * @return the archivoDefecto
+	 */
+	public static String getArchivoDefecto() {
+		return archivoDefecto;
+	}
+
 	private String servidorFtp;
 	private String carpEntrada;
 	private String carpSalida;
@@ -21,11 +32,13 @@ public class Propiedades {
 	private String carpHistSal;
 	private String login;
 	private String Clave;
-	
+	private String ArchivoEntrada;
+	private String ArchivoSalida;
 	/**
 	 * propiedades de la configuración
 	 */
-	Properties propiedades ;
+	Properties propiedades;
+
 	/**
 	 * Constructor que trae el archivo por defecto
 	 */
@@ -36,11 +49,12 @@ public class Propiedades {
 
 	/**
 	 * carga los parametros del archivo otorgado
+	 *
 	 * @param archivo
 	 */
 	public Propiedades(String archivo) {
 		// TODO Auto-generated constructor stub
-		propiedades= new Properties();
+		propiedades = new Properties();
 		try {
 			propiedades.load(new FileInputStream(archivo));
 
@@ -49,151 +63,185 @@ public class Propiedades {
 			setCarpSalida(propiedades.getProperty("carpeta.Salida"));
 			setCarpHistSal(propiedades.getProperty("carpeta.HistSalida"));
 			setClave(propiedades.getProperty("servidor.clave"));
-			setServidorFtp(propiedades.getProperty("servidor.FTP","localhost"));
+			setServidorFtp(propiedades.getProperty("servidor.FTP", "localhost"));
 			setLogin(propiedades.getProperty("servidor.login"));
-		} catch (FileNotFoundException e) {
+			setArchivoEntrada(propiedades.getProperty("archivo.entrada"));
+			setArchivoSalida(propiedades.getProperty("archivo.salida"));
+		} catch (final FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			System.out.println("el archivo no existe");
 			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-/**
- * mostrar todos los atributos del archivo de propiedades
- */
+
+	/**
+	 *
+	 * @return ArchivoEntradda
+	 */
+	public String getArchivoEntrada() {
+		return ArchivoEntrada;
+	}
+
+	/**
+	 * @return the archivoSalida
+	 */
+	public String getArchivoSalida() {
+		return ArchivoSalida;
+	}
+
+	/**
+	 * @return the carpEntrada
+	 */
+	public String getCarpEntrada() {
+		return carpEntrada;
+	}
+
+	/**
+	 * @return the carpHistEnt
+	 */
+	public String getCarpHistEnt() {
+		return carpHistEnt;
+	}
+
+	/**
+	 * @return the carpHistSal
+	 */
+	public String getCarpHistSal() {
+		return carpHistSal;
+	}
+
+	/**
+	 * @return the carpSalida
+	 */
+	public String getCarpSalida() {
+		return carpSalida;
+	}
+
+	/**
+	 * @return the clave
+	 */
+	public String getClave() {
+		return Clave;
+	}
+
+	/**
+	 * @return the login
+	 */
+	public String getLogin() {
+		return login;
+	}
+
+	/**
+	 * @return the propiedades
+	 */
+	public Properties getPropiedades() {
+		return propiedades;
+	}
+
+	/**
+	 * @return the servidorFtp
+	 */
+	public String getServidorFtp() {
+		return servidorFtp;
+	}
+
+	/**
+	 * mostrar todos los atributos del archivo de propiedades
+	 */
 	public void mostrarAtributos() {
-		System.out.println("Carpeta.Entrada:"+getCarpEntrada());
-		System.out.println("carpeta.HistEntrada:"+getCarpHistEnt());
-		System.out.println("carpeta.Salida:"+getCarpSalida());
-		System.out.println("carpeta.HistSalida:"+getCarpHistSal());
-		System.out.println("servidor.clave:"+getClave());
-		System.out.println("servidor.FTP:"+getServidorFtp());
-		System.out.println("servidor.login:"+getLogin());
-			}
+		System.out.println("Carpeta.Entrada:" + getCarpEntrada());
+		System.out.println("carpeta.HistEntrada:" + getCarpHistEnt());
+		System.out.println("carpeta.Salida:" + getCarpSalida());
+		System.out.println("carpeta.HistSalida:" + getCarpHistSal());
+		System.out.println("servidor.clave:" + getClave());
+		System.out.println("servidor.FTP:" + getServidorFtp());
+		System.out.println("servidor.login:" + getLogin());
+		System.out.println("archivo.entrada:" + getArchivoEntrada());
+		System.out.println("archivo.salida:" + getArchivoSalida());
+	}
 
-/**
- * @return the archivoDefecto
- */
-public static String getArchivoDefecto() {
-	return archivoDefecto;
-}
+	/**
+	 *
+	 * @param archivoEntrada
+	 *            set archivoEntrada
+	 */
+	public void setArchivoEntrada(String archivoEntrada) {
+		ArchivoEntrada = archivoEntrada;
+	}
 
+	/**
+	 * @param archivoSalida
+	 *            the archivoSalida to set
+	 */
+	public void setArchivoSalida(String archivoSalida) {
+		ArchivoSalida = archivoSalida;
+	}
 
+	/**
+	 * @param carpEntrada
+	 *            the carpEntrada to set
+	 */
+	public void setCarpEntrada(String carpEntrada) {
+		this.carpEntrada = carpEntrada;
+	}
 
-/**
- * @return the servidorFtp
- */
-public String getServidorFtp() {
-	return servidorFtp;
-}
+	/**
+	 * @param carpHistEnt
+	 *            the carpHistEnt to set
+	 */
+	public void setCarpHistEnt(String carpHistEnt) {
+		this.carpHistEnt = carpHistEnt;
+	}
 
-/**
- * @param servidorFtp the servidorFtp to set
- */
-public void setServidorFtp(String servidorFtp) {
-	this.servidorFtp = servidorFtp;
-}
+	/**
+	 * @param carpHistSal
+	 *            the carpHistSal to set
+	 */
+	public void setCarpHistSal(String carpHistSal) {
+		this.carpHistSal = carpHistSal;
+	}
 
-/**
- * @return the carpEntrada
- */
-public String getCarpEntrada() {
-	return carpEntrada;
-}
+	/**
+	 * @param carpSalida
+	 *            the carpSalida to set
+	 */
+	public void setCarpSalida(String carpSalida) {
+		this.carpSalida = carpSalida;
+	}
 
-/**
- * @param carpEntrada the carpEntrada to set
- */
-public void setCarpEntrada(String carpEntrada) {
-	this.carpEntrada = carpEntrada;
-}
+	/**
+	 * @param clave
+	 *            the clave to set
+	 */
+	public void setClave(String clave) {
+		Clave = clave;
+	}
 
-/**
- * @return the carpSalida
- */
-public String getCarpSalida() {
-	return carpSalida;
-}
+	/**
+	 * @param login
+	 *            the login to set
+	 */
+	public void setLogin(String login) {
+		this.login = login;
+	}
 
-/**
- * @param carpSalida the carpSalida to set
- */
-public void setCarpSalida(String carpSalida) {
-	this.carpSalida = carpSalida;
-}
+	/**
+	 * @param propiedades
+	 *            the propiedades to set
+	 */
+	public void setPropiedades(Properties propiedades) {
+		this.propiedades = propiedades;
+	}
 
-/**
- * @return the carpHistEnt
- */
-public String getCarpHistEnt() {
-	return carpHistEnt;
-}
+	/**
+	 * @param servidorFtp
+	 *            the servidorFtp to set
+	 */
+	public void setServidorFtp(String servidorFtp) {
+		this.servidorFtp = servidorFtp;
+	}
 
-/**
- * @param carpHistEnt the carpHistEnt to set
- */
-public void setCarpHistEnt(String carpHistEnt) {
-	this.carpHistEnt = carpHistEnt;
-}
-
-/**
- * @return the carpHistSal
- */
-public String getCarpHistSal() {
-	return carpHistSal;
-}
-
-/**
- * @param carpHistSal the carpHistSal to set
- */
-public void setCarpHistSal(String carpHistSal) {
-	this.carpHistSal = carpHistSal;
-}
-
-/**
- * @return the login
- */
-public String getLogin() {
-	return login;
-}
-
-/**
- * @param login the login to set
- */
-public void setLogin(String login) {
-	this.login = login;
-}
-
-/**
- * @return the clave
- */
-public String getClave() {
-	return Clave;
-}
-
-/**
- * @param clave the clave to set
- */
-public void setClave(String clave) {
-	Clave = clave;
-}
-
-/**
- * @return the propiedades
- */
-public Properties getPropiedades() {
-	return propiedades;
-}
-
-/**
- * @param propiedades the propiedades to set
- */
-public void setPropiedades(Properties propiedades) {
-	this.propiedades = propiedades;
-}
-
-	
-	
 }
