@@ -5,10 +5,12 @@ package conexion;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Calendar;
 
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
@@ -55,6 +57,14 @@ public class FtpNaiguata {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public String fecha() {
+		String fecha = "";
+		Calendar.getInstance();
+		fecha = fecha + Calendar.YEAR + Calendar.MONTH + Calendar.DATE + Calendar.HOUR + Calendar.MINUTE
+				+ Calendar.SECOND;
+		return fecha;
 	}
 
 	/**
@@ -107,7 +117,7 @@ public class FtpNaiguata {
 			outputStream.close();
 
 			if (success) {
-				System.out.println("File #1 has been downloaded successfully.");
+				System.out.println("File " + nombreArchivo + " ha sido descargado exitosamente.");
 			}
 
 		} catch (final FileNotFoundException e) {
@@ -125,6 +135,40 @@ public class FtpNaiguata {
 	 */
 	public boolean isLogin() {
 		return login;
+	}
+
+	/**
+	 * envia el archivo al servidor FTP y que se encuetnra la carpeta de Salida
+	 *
+	 */
+	public void putFile() {
+		// final String remote_working_dir_path = "/ruta/remota/del/ftp/";
+		final String directorio = archivo.getPropiedades().getCarpSalida();
+		final String nombreArchivo = archivo.getPropiedades().getArchivoSalida();
+		File uploadFile;
+		if (directorio.isEmpty() || directorio.equals("") || directorio == null) {
+			uploadFile = new File(nombreArchivo);
+		} else {
+			uploadFile = new File(directorio + "/" + nombreArchivo);
+		}
+		FileInputStream fis;
+		try {
+			fis = new FileInputStream(uploadFile);
+			cliente.enterLocalPassiveMode(); // IMPORTANTE!!!!
+			cliente.setFileType(FTP.BINARY_FILE_TYPE);
+			// cliente.changeWorkingDirectory(remote_working_dir_path);
+			final boolean sucess = cliente.storeFile(nombreArchivo, fis);
+			fis.close();
+			if (sucess == false) {
+				throw new Exception("Error al subir el fichero");
+			} else {
+				System.out.println("File " + uploadFile + " ha sido cargado exitosamente.");
+
+			}
+		} catch (final Exception eFTPClient) {
+			System.out.println(eFTPClient.getMessage());
+		}
+
 	}
 
 	/**
