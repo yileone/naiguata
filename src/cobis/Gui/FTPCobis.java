@@ -76,7 +76,14 @@ public class FTPCobis {
 	 */
 	private static void obtenerArchivo() {
 		// TODO Auto-generated method stub
+		cargarPropiedades();
+		final Archivo archivo = new Archivo(propiedades, 'E');
+		final FtpNaiguata conexion = new FtpNaiguata(archivo);
+		if (conexion.isLogin()) {
+			conexion.getFile();
+			conexion.cerrar();
 
+		}
 	}
 
 	/**
@@ -88,6 +95,7 @@ public class FTPCobis {
 		final FtpNaiguata conexion = new FtpNaiguata(archivo);
 		if (conexion.isLogin()) {
 			System.out.println("**************  CONEXION ESTABLECIDA CON : " + propiedades.getServidorFtp());
+			conexion.cerrar();
 		} else {
 			System.out.println("**************   ERROR EN CONEXION  ****** " + propiedades.getServidorFtp());
 

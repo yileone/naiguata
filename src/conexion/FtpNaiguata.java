@@ -3,10 +3,14 @@
  */
 package conexion;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
+import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 
 import archivos.Archivo;
@@ -25,22 +29,12 @@ public class FtpNaiguata {
 	 *
 	 */
 	public FtpNaiguata(Archivo archivo) {
-		// TODO Auto-generated constructor stub
 		setLogin(false);
 		this.archivo = archivo;
 		cliente = new FTPClient();
 		try {
-			System.out.println(
-					"conectado:" + cliente.isConnected() + " servidor:" + archivo.getPropiedades().getServidorFtp());
-			System.out.println(archivo.getPropiedades().getLogin());
-			System.out.println(archivo.getPropiedades().getClave());
 			cliente.connect(archivo.getPropiedades().getServidorFtp());
-			System.out.println(
-					"conectado:" + cliente.isConnected() + " servidor:" + archivo.getPropiedades().getServidorFtp());
-
 			setLogin(cliente.login(archivo.getPropiedades().getLogin(), archivo.getPropiedades().getClave()));
-			System.out.println("conectado:" + cliente.isConnected());
-			System.out.println("conectado:" + isLogin());
 		} catch (final Exception e) {
 
 			System.out.println(e.getMessage());
@@ -53,13 +47,10 @@ public class FtpNaiguata {
 	 */
 	public void cerrar() {
 		try {
-			cliente.logout();
-		} catch (final IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			cliente.disconnect();
+			if (cliente.isConnected()) {
+				cliente.logout();
+				cliente.disconnect();
+			}
 		} catch (final IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -85,24 +76,47 @@ public class FtpNaiguata {
 	 *
 	 * @return
 	 */
-	public FileOutputStream getFile() {
-		FileOutputStream entrada = null;
+	public void getFile() {
+		cliente.enterLocalPassiveMode();
 		try {
-			entrada = new FileOutputStream(getArchivo().getPropiedades().getArchivoEntrada());
+			cliente.setFileType(FTP.BINARY_FILE_TYPE);
+		} catch (final IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			final String remoteFile = archivo.getPropiedades().getArchivoEntrada();
+			final String directorio = archivo.getPropiedades().getCarpEntrada();
+			final String nombreArchivo = archivo.getPropiedades().getArchivoEntrada();
+			File downloadFile;
+			if (directorio.isEmpty() || directorio.equals("") || directorio == null) {
+				downloadFile = new File(nombreArchivo);
+			} else {
+				downloadFile = new File(directorio + "/" + nombreArchivo);
+			}
+
+			final OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(downloadFile));
+			boolean success;
+			success = false;
+			try {
+				success = cliente.retrieveFile(remoteFile, outputStream);
+			} catch (final IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			outputStream.close();
+
+			if (success) {
+				System.out.println("File #1 has been downloaded successfully.");
+			}
+
 		} catch (final FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-
-		try {
-			cliente.retrieveFile("/" + getArchivo().getPropiedades().getCarpEntrada() + "/"
-					+ getArchivo().getPropiedades().getArchivoEntrada(), entrada);
 		} catch (final IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		return entrada;
 
 	}
 
