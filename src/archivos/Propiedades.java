@@ -5,7 +5,9 @@ package archivos;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Properties;
 
 /**
@@ -24,6 +26,8 @@ public class Propiedades {
 	public static String getArchivoDefecto() {
 		return archivoDefecto;
 	}
+
+	private String archivoPropiedades;
 
 	private String servidorFtp;
 	private String carpEntrada;
@@ -55,6 +59,7 @@ public class Propiedades {
 	public Propiedades(String archivo) {
 		// TODO Auto-generated constructor stub
 		propiedades = new Properties();
+		setArchivoPropiedades(archivo);
 		try {
 			propiedades.load(new FileInputStream(archivo));
 
@@ -79,10 +84,34 @@ public class Propiedades {
 
 	/**
 	 *
+	 * @param login
+	 * @param clave
+	 */
+	public void cambiarClaves(String login, String clave) {
+		try {
+			propiedades.setProperty("servidor.clave", clave);
+			propiedades.setProperty("servidor.login", login);
+
+			propiedades.store(new FileWriter(getArchivoPropiedades()), "cambio de clave " + Calendar.getInstance());
+		} catch (final IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 *
 	 * @return ArchivoEntradda
 	 */
 	public String getArchivoEntrada() {
 		return ArchivoEntrada;
+	}
+
+	/**
+	 * @return the archivoPropiedades
+	 */
+	public String getArchivoPropiedades() {
+		return archivoPropiedades;
 	}
 
 	/**
@@ -170,6 +199,14 @@ public class Propiedades {
 	 */
 	public void setArchivoEntrada(String archivoEntrada) {
 		ArchivoEntrada = archivoEntrada;
+	}
+
+	/**
+	 * @param archivoPropiedades
+	 *            the archivoPropiedades to set
+	 */
+	public void setArchivoPropiedades(String archivoPropiedades) {
+		this.archivoPropiedades = archivoPropiedades;
 	}
 
 	/**

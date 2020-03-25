@@ -4,6 +4,7 @@
 package archivos;
 
 /**
+ * Clase que genera clave publica y privada . Asi como encripta y desencripta usandolos
  * @author yisheng
  *
  */
@@ -17,9 +18,11 @@ import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.SecureRandom;
 import java.security.spec.KeySpec;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.Random;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -29,6 +32,9 @@ import javax.crypto.NoSuchPaddingException;
 public class Claves {
 
 	private static Cipher rsa;
+
+	private PublicKey publicKey;
+	private PrivateKey privateKey;
 
 	/**
 	 *
@@ -43,9 +49,6 @@ public class Claves {
 		fos.close();
 	}
 
-	private PublicKey publicKey;
-
-	private PrivateKey privateKey;
 
 	public Claves() {
 		try {
@@ -74,7 +77,7 @@ public class Claves {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+  
 		catch (IllegalBlockSizeException | BadPaddingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -84,7 +87,29 @@ public class Claves {
 		return "";
 
 	}
-
+/**
+ * 
+ * @return
+ */
+public String generarClave()
+{
+	String[] symbols = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"};
+	int length = 10;
+	Random random;
+	try {
+		random = SecureRandom.getInstanceStrong();
+		StringBuilder sb = new StringBuilder(length);
+		for (int i = 0; i < length; i++) {
+		    int indexRandom = random.nextInt( symbols.length );
+		    sb.append( symbols[indexRandom] );
+		}
+		return sb.toString();
+	} catch (NoSuchAlgorithmException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} // as of JDK 8, this should return the strongest algorithm available to the JVM
+	return "";
+	}
 	/**
 	 *
 	 * @param text
@@ -176,5 +201,6 @@ public class Claves {
 		final KeySpec keySpec = new X509EncodedKeySpec(bytes);
 		publicKey = keyFactory.generatePublic(keySpec);
 	}
-
+	
+	
 }

@@ -4,9 +4,11 @@
  */
 package cobis.Gui;
 
+import java.io.Console;
 import java.io.IOException;
 
 import archivos.Archivo;
+import archivos.Claves;
 import archivos.Propiedades;
 import conexion.FtpNaiguata;
 
@@ -18,6 +20,37 @@ public class FTPCobis {
 
 	private static String error = "la opción no es válida ejecute el parametro -? para mostrar la ayuda";
 	private static Propiedades propiedades;
+
+	/**
+	 * cambio de claves del servidor login y password
+	 */
+	private static void cambiarClaves() {
+
+		String login;
+		String clave;
+		String reClave;
+
+		System.out.println(".:: Cambio de Login ::.");
+		final Console entrada = System.console();
+
+		System.out.print("Ingrese su login: ");
+		login = entrada.readLine();
+
+		clave = new String(entrada.readPassword("Ingrese su clave: "));
+
+		reClave = new String(entrada.readPassword("Repita su clave por favor: "));
+
+		if (clave.equals(reClave)) {
+			cargarPropiedades();
+			final Archivo archivo = new Archivo(propiedades, 'S');
+			archivo.cambioClaves(login, clave);
+			System.out.println("Probando sus nuevas credenciales");
+			probarConexion();
+		} else {
+			System.out.println("Las claves no coinciden por favor repetir la operación");
+		}
+
+	}
 
 	private static void cargarArchivo() {
 		cargarPropiedades();
@@ -31,6 +64,24 @@ public class FTPCobis {
 
 	private static void cargarPropiedades() {
 		propiedades = new Propiedades();
+	}
+
+	/**
+	 *
+	 */
+	private static void generaClaves() {
+		// TODO Auto-generated method stub
+		final Claves claves = new Claves();
+		claves.generaKey();
+	}
+
+	/**
+	 *
+	 */
+	private static void generarClaveAleatoria() {
+		final Claves claves = new Claves();
+		System.out.println(claves.generarClave());
+
 	}
 
 	/**
@@ -50,6 +101,15 @@ public class FTPCobis {
 			cargarArchivo();
 		} else if (args[0].equals("-H")) {
 			pasarHistorico();
+		} else if (args[0].equals("-K")) {
+			generaClaves();
+		} else if (args[0].equals("-H")) {
+			pasarHistorico();
+		} else if (args[0].equals("-G")) {
+			generarClaveAleatoria();
+		} else if (args[0].equals("-N")) {
+			cambiarClaves();
+
 		} else if (args[0].equals("-?")) {
 			mostrarAyuda();
 		} else {
@@ -71,6 +131,9 @@ public class FTPCobis {
 		System.out.println("* -T prueba la conexion con el servidor FTP *");
 		System.out.println("* -C carga el archivo de salida al servidor FTP *");
 		System.out.println("* -H Pase a histórico  *");
+		System.out.println("* -K Generador de claves para crt *");
+		System.out.println("* -G Generador de claves  *");
+		System.out.println("* -N nueva login y clave del servidor ftp  *");
 		System.out.println("********************************");
 
 	}
@@ -98,7 +161,7 @@ public class FTPCobis {
 		final Archivo archivo = new Archivo(propiedades, 'S');
 		try {
 			archivo.paseHistorico();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
