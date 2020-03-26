@@ -21,6 +21,17 @@ public class Propiedades {
 	static private String archivoDefecto = "FtpCobis.properties";
 
 	/**
+	 *
+	 * @param valor
+	 * @return
+	 */
+	public static String desencripta(String valor) {
+
+		// final byte[] encoded = Base64.getEncoder().encode(property.getBytes());
+		return Claves.AESdecrypt(valor);
+	}
+
+	/**
 	 * @return the archivoDefecto
 	 */
 	public static String getArchivoDefecto() {
@@ -28,7 +39,6 @@ public class Propiedades {
 	}
 
 	private String archivoPropiedades;
-
 	private String servidorFtp;
 	private String carpEntrada;
 	private String carpSalida;
@@ -38,6 +48,7 @@ public class Propiedades {
 	private String Clave;
 	private String ArchivoEntrada;
 	private String ArchivoSalida;
+
 	/**
 	 * propiedades de la configuración
 	 */
@@ -67,9 +78,9 @@ public class Propiedades {
 			setCarpHistEnt(propiedades.getProperty("carpeta.HistEntrada"));
 			setCarpSalida(propiedades.getProperty("carpeta.Salida"));
 			setCarpHistSal(propiedades.getProperty("carpeta.HistSalida"));
-			setClave(propiedades.getProperty("servidor.clave"));
+			setClave(desencripta(propiedades.getProperty("servidor.clave")));
 			setServidorFtp(propiedades.getProperty("servidor.FTP", "localhost"));
-			setLogin(propiedades.getProperty("servidor.login"));
+			setLogin(desencripta(propiedades.getProperty("servidor.login")));
 			setArchivoEntrada(propiedades.getProperty("archivo.entrada"));
 			setArchivoSalida(propiedades.getProperty("archivo.salida"));
 		} catch (final FileNotFoundException e) {
@@ -89,14 +100,23 @@ public class Propiedades {
 	 */
 	public void cambiarClaves(String login, String clave) {
 		try {
-			propiedades.setProperty("servidor.clave", clave);
-			propiedades.setProperty("servidor.login", login);
-
-			propiedades.store(new FileWriter(getArchivoPropiedades()), "cambio de clave " + Calendar.getInstance());
+			propiedades.setProperty("servidor.clave", encriptar(clave));
+			propiedades.setProperty("servidor.login", encriptar(login));
+			Calendar.getInstance();
+			propiedades.store(new FileWriter(getArchivoPropiedades()), "");
 		} catch (final IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 *
+	 * @param valor
+	 * @return
+	 */
+	public String encriptar(String valor) {
+		return Claves.AESencrypt(valor);
 	}
 
 	/**
