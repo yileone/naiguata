@@ -72,7 +72,7 @@ public class Archivo {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param login
 	 * @param clave
 	 */
@@ -141,7 +141,7 @@ public class Archivo {
 
 	/**
 	 * copia el archivo y lo renombra con su prefijo historico
-	 * 
+	 *
 	 * @param source
 	 * @param target
 	 * @return boolean si fue efectiva la copia
@@ -166,7 +166,7 @@ public class Archivo {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return fecha actual
 	 */
 	public String fecha() {

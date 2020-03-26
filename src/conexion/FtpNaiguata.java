@@ -10,7 +10,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Calendar;
 
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
@@ -59,8 +58,6 @@ public class FtpNaiguata {
 		}
 	}
 
-	
-
 	/**
 	 * @return the archivo
 	 */
@@ -80,18 +77,24 @@ public class FtpNaiguata {
 	 *
 	 * @return
 	 */
-	public void getFile() {
+	public boolean getFile() {
+		final String directorio = archivo.getPropiedades().getCarpSalida();
+		final String nombreArchivo = archivo.getPropiedades().getArchivoSalida();
+		return getFile(directorio, nombreArchivo);
+	}
+
+	public boolean getFile(String directorio, String nombreArchivo) {
+		boolean success;
 		cliente.enterLocalPassiveMode();
 		try {
 			cliente.setFileType(FTP.BINARY_FILE_TYPE);
 		} catch (final IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+			return false;
 		}
 		try {
-			final String remoteFile = archivo.getPropiedades().getArchivoEntrada();
-			final String directorio = archivo.getPropiedades().getCarpEntrada();
-			final String nombreArchivo = archivo.getPropiedades().getArchivoEntrada();
+			final String remoteFile = nombreArchivo;
 			File downloadFile;
 			if (directorio.isEmpty() || directorio.equals("") || directorio == null) {
 				downloadFile = new File(nombreArchivo);
@@ -100,27 +103,34 @@ public class FtpNaiguata {
 			}
 
 			final OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(downloadFile));
-			boolean success;
+
 			success = false;
 			try {
 				success = cliente.retrieveFile(remoteFile, outputStream);
 			} catch (final IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+
+				outputStream.close();
+				return false;
 			}
 			outputStream.close();
 
 			if (success) {
 				System.out.println("Archivo " + nombreArchivo + " ha sido descargado exitosamente.");
+				return true;
 			}
 
 		} catch (final FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		} catch (final IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		}
+		return success;
 
 	}
 
@@ -135,10 +145,16 @@ public class FtpNaiguata {
 	 * envia el archivo al servidor FTP y que se encuetnra la carpeta de Salida
 	 *
 	 */
-	public void putFile() {
+
+	public boolean putFile() {
+
+		final String directorio = archivo.getPropiedades().getCarpEntrada();
+		final String nombreArchivo = archivo.getPropiedades().getArchivoEntrada();
+		return putFile(directorio, nombreArchivo);
+	}
+
+	public boolean putFile(String directorio, String nombreArchivo) {
 		// final String remote_working_dir_path = "/ruta/remota/del/ftp/";
-		final String directorio = archivo.getPropiedades().getCarpSalida();
-		final String nombreArchivo = archivo.getPropiedades().getArchivoSalida();
 		File uploadFile;
 		if (directorio.isEmpty() || directorio.equals("") || directorio == null) {
 			uploadFile = new File(nombreArchivo);
@@ -154,13 +170,16 @@ public class FtpNaiguata {
 			final boolean sucess = cliente.storeFile(nombreArchivo, fis);
 			fis.close();
 			if (sucess == false) {
-				throw new Exception("Error al subir el fichero");
+
+				System.out.println("Error al subir el fichero");
+				return false;
 			} else {
 				System.out.println("Archivo " + uploadFile + " ha sido cargado exitosamente.");
-
+				return true;
 			}
 		} catch (final Exception eFTPClient) {
 			System.out.println(eFTPClient.getMessage());
+			return false;
 		}
 
 	}

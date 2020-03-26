@@ -10,6 +10,7 @@ import java.io.IOException;
 import archivos.Archivo;
 import archivos.Claves;
 import archivos.Propiedades;
+import conexion.DemonioFtpCobis;
 import conexion.FtpNaiguata;
 
 /**
@@ -20,6 +21,7 @@ public class FTPCobis {
 
 	private static String error = "la opción no es válida ejecute el parametro -? para mostrar la ayuda";
 	private static Propiedades propiedades;
+	private static DemonioFtpCobis demonio = new DemonioFtpCobis();
 
 	/**
 	 * cambio de claves del servidor login y password
@@ -69,6 +71,24 @@ public class FTPCobis {
 	/**
 	 *
 	 */
+	private static void despertarDemonio() {
+		cargarPropiedades();
+		final Archivo archivo = new Archivo(propiedades, 'E');
+		demonio.setArchivo(archivo);
+		demonio.start();
+		System.out.println("empezó");
+		try {
+			Thread.sleep(5000);
+		} catch (final InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	/**
+	 *
+	 */
 	private static void generaClaves() {
 		// TODO Auto-generated method stub
 		final Claves claves = new Claves();
@@ -109,6 +129,8 @@ public class FTPCobis {
 			generarClaveAleatoria();
 		} else if (args[0].equals("-N")) {
 			cambiarClaves();
+		} else if (args[0].equals("-D")) {
+			despertarDemonio();
 
 		} else if (args[0].equals("-?")) {
 			mostrarAyuda();
@@ -134,6 +156,7 @@ public class FTPCobis {
 		System.out.println("* -K Generador de claves para crt *");
 		System.out.println("* -G Generador de claves  *");
 		System.out.println("* -N nueva login y clave del servidor ftp  *");
+		System.out.println("* -D Despertar el demonio  *");
 		System.out.println("********************************");
 
 	}
