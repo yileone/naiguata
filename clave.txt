@@ -1,0 +1,15 @@
+
+Jimenez, Brian.
+mié, 19 oct, 09:02
+para mí
+
+servidor donde cae el archivo:
+\\sadcfs01\trx_vzla_bcb
+
+servidor que tiene accedo a la vpn
+
+
+Usuario: BCBsftpusr
+Clave: Th@fSmh+v9173
+Servidor: 172.31.220.70
+Directorio de trabajo: "F:\Transfer-SFTP"

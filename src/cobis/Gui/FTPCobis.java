@@ -12,6 +12,7 @@ import archivos.Claves;
 import archivos.Propiedades;
 import conexion.DemonioFtpCobis;
 import conexion.FtpNaiguata;
+import conexion.SftpNaiguata;
 
 /**
  * @author yisheng
@@ -25,8 +26,9 @@ public class FTPCobis {
 
 	/**
 	 * cambio de claves del servidor login y password
+	 * @param segura verifica si es la conexion es ftp o sftp
 	 */
-	private static void cambiarClaves() {
+	private static void cambiarClaves(boolean segura) {
 
 		String login;
 		String clave;
@@ -47,12 +49,28 @@ public class FTPCobis {
 			final Archivo archivo = new Archivo(propiedades, 'S');
 			archivo.cambioClaves(login, clave);
 			System.out.println("Probando sus nuevas credenciales");
-			probarConexion();
+			if (segura) {
+				System.out.println("Probando conexion SFTP");
+				
+				 probarConexionSegura();
+			}
+			else {
+				probarConexion();	
+			}
+			
 		} else {
 			System.out.println("Las claves no coinciden por favor repetir la operación");
 		}
 
 	}
+	
+	/**
+	 * cambio de claves del servidor login y password
+	 */
+	private static void cambiarClavesSegura() {
+		cambiarClaves(true);
+	}
+	
 
 	private static void cargarArchivo() {
 		cargarPropiedades();
@@ -128,7 +146,11 @@ public class FTPCobis {
 		} else if (args[0].equals("-G")) {
 			generarClaveAleatoria();
 		} else if (args[0].equals("-N")) {
-			cambiarClaves();
+			cambiarClaves(false);
+		} else if (args[0].equals("-M")) {
+			cambiarClavesSegura();
+		} else if (args[0].equals("-S")) {
+			probarConexionSegura();
 		} else if (args[0].equals("-D")) {
 			despertarDemonio();
 
@@ -156,6 +178,8 @@ public class FTPCobis {
 		System.out.println("* -K Generador de claves para crt *");
 		System.out.println("* -G Generador de claves  *");
 		System.out.println("* -N nueva login y clave del servidor ftp  *");
+		System.out.println("* -M nueva login y clave del servidor Sftp  *");
+		System.out.println("* -S Probar conexion segura configurada  *");
 		System.out.println("* -D Despertar el demonio  *");
 		System.out.println("********************************");
 
@@ -205,5 +229,19 @@ public class FTPCobis {
 
 		}
 	}
+	/**
+	 * Testea la conexión
+	 */
+	private static void probarConexionSegura() {
+		cargarPropiedades();
+		final Archivo archivo = new Archivo(propiedades, 'E');
+		final SftpNaiguata conexion = new SftpNaiguata(archivo);
+		if (conexion.isLogin()) {
+			System.out.println("**************  CONEXION SEGURA ESTABLECIDA CON : " + propiedades.getServidorFtp());
+			conexion.cerrar();
+		} else {
+			System.out.println("**************   ERROR EN CONEXION  ****** " + propiedades.getServidorFtp());
 
+		}
+	}
 }
