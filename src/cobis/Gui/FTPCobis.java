@@ -240,7 +240,7 @@ public class FTPCobis {
 			System.out.println("**************  CONEXION SEGURA ESTABLECIDA CON : " + propiedades.getServidorFtp());
 			conexion.cerrar();
 		} else {
-			System.out.println("**************   ERROR EN CONEXION  ****** " + propiedades.getServidorFtp());
+			System.out.println("**************   ERROR EN CONEXION SEGURA****** " + propiedades.getServidorFtp());
 
 		}
 	}
