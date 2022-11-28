@@ -40,6 +40,7 @@ public class Propiedades {
 
 	private String archivoPropiedades;
 	private String servidorFtp;
+	private int servidorPuerto;
 	private String carpEntrada;
 	private String carpSalida;
 	private String carpHistEnt;
@@ -80,6 +81,7 @@ public class Propiedades {
 			setCarpHistSal(propiedades.getProperty("carpeta.HistSalida"));
 			setClave(desencripta(propiedades.getProperty("servidor.clave")));
 			setServidorFtp(propiedades.getProperty("servidor.FTP", "localhost"));
+			setServidorPuerto(propiedades.getProperty("servidor.puerto", "21"));
 			setLogin(desencripta(propiedades.getProperty("servidor.login")));
 			setArchivoEntrada(propiedades.getProperty("archivo.entrada"));
 			setArchivoSalida(propiedades.getProperty("archivo.salida"));
@@ -92,6 +94,9 @@ public class Propiedades {
 			e.printStackTrace();
 		}
 	}
+
+	
+
 
 	/**
 	 *
@@ -197,6 +202,14 @@ public class Propiedades {
 		return servidorFtp;
 	}
 
+	
+	
+	/**
+	 * @return the servidorFtp
+	 */
+	public int getServidorPuerto() {
+		return servidorPuerto;
+	}
 	/**
 	 * mostrar todos los atributos del archivo de propiedades
 	 */
@@ -207,6 +220,7 @@ public class Propiedades {
 		System.out.println("carpeta.HistSalida:" + getCarpHistSal());
 		System.out.println("servidor.clave:" + getClave());
 		System.out.println("servidor.FTP:" + getServidorFtp());
+		System.out.println("servidor.Puerto:" + getServidorPuerto());
 		System.out.println("servidor.login:" + getLogin());
 		System.out.println("archivo.entrada:" + getArchivoEntrada());
 		System.out.println("archivo.salida:" + getArchivoSalida());
@@ -299,6 +313,16 @@ public class Propiedades {
 	 */
 	public void setServidorFtp(String servidorFtp) {
 		this.servidorFtp = servidorFtp;
+	}
+	
+	/**
+	 * 
+	 * @param puertoServidor
+	 */
+	private void setServidorPuerto(String puertoServidor) {
+
+		this.servidorPuerto= Integer.parseInt(puertoServidor);
+		
 	}
 
 }

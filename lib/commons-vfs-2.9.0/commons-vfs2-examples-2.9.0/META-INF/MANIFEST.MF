@@ -1,0 +1,42 @@
+Manifest-Version: 1.0
+Bundle-License: https://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-SymbolicName: org.apache.commons.vfs2
+Built-By: ggregory
+Bnd-LastModified: 1626522646598
+Implementation-Vendor-Id: org.apache
+Specification-Title: Apache Commons VFS Examples
+Bundle-DocURL: http://commons.apache.org/proper/commons-vfs/commons-vf
+ s2-examples/
+Include-Resource: providers-http4-default.xml=src/main/resources/provi
+ ders-http4-default.xml,META-INF/NOTICE.txt=../NOTICE.txt,META-INF/LIC
+ ENSE.txt=../LICENSE.txt
+Import-Package: com.jcraft.jsch;resolution:=optional,org.apache.common
+ s.lang3;version="[3.12,4)",org.apache.commons.net.ftp;version="[3.8,4
+ )";resolution:=optional,org.apache.commons.vfs2;version="[2.9,3)",org
+ .apache.commons.vfs2.filter;version="[2.9,3)",org.apache.commons.vfs2
+ .impl;version="[2.9,3)",org.apache.commons.vfs2.operations;version="[
+ 2.9,3)",org.apache.commons.vfs2.util;version="[2.9,3)"
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+Export-Package: org.apache.commons.vfs2.example;version="2.9.0",org.ap
+ ache.commons.vfs2.example.filter;version="2.9.0",org.apache.commons.v
+ fs2.libcheck;version="2.9.0"
+Bundle-Name: Apache Commons VFS Examples
+Build-Jdk-Spec: 1.8
+Implementation-Title: Apache Commons VFS Examples
+Bundle-Description: Apache Commons VFS is a Virtual File System librar
+ y - Examples.
+Implementation-Version: 2.9.0
+Specification-Vendor: The Apache Software Foundation
+Bundle-ManifestVersion: 2
+Bundle-Vendor: The Apache Software Foundation
+Tool: Bnd-5.3.0.202102221516
+Implementation-Vendor: The Apache Software Foundation
+Bundle-Version: 2.9.0
+X-Compile-Target-JDK: 1.8
+Implementation-Build: release@r832824a318126c6fc9fe345ed25b4a4452c00ae
+ f; 2021-07-17 11:41:51+0000
+X-Compile-Source-JDK: 1.8
+Created-By: Apache Maven Bundle Plugin
+Specification-Version: 2.9.0
+Build-Jdk: 1.8.0_292
+

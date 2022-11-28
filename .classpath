@@ -9,5 +9,7 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/bc22016/Documents/Compartir/Reconversión Monetaria/naiguata/lib/commons-net-1.4.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/bc22016/Documents/Compartir/Reconversión Monetaria/naiguata/lib/commons-net-3.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/bc22016/Documents/Compartir/Reconversión Monetaria/naiguata/lib/jsch-0.1.55.jar"/>
+	<classpathentry kind="lib" path="C:/Users/bc22016/Documents/Compartir/Reconversión Monetaria/naiguata/lib/commons-vfs-2.9.0/commons-vfs2-2.9.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

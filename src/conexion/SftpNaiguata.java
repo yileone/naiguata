@@ -36,7 +36,7 @@ public class SftpNaiguata {
 			this.archivo = archivo;
 			cliente = new FTPSClient();
 			try {
-				cliente.connect(archivo.getPropiedades().getServidorFtp());
+				cliente.connect(archivo.getPropiedades().getServidorFtp(),archivo.getPropiedades().getServidorPuerto());
 				setLogin(cliente.login(archivo.getPropiedades().getLogin(), archivo.getPropiedades().getClave()));
 			} catch (final Exception e) {
 

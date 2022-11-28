@@ -13,6 +13,7 @@ import archivos.Propiedades;
 import conexion.DemonioFtpCobis;
 import conexion.FtpNaiguata;
 import conexion.SftpNaiguata;
+import conexion.Sftpyileone;
 
 /**
  * @author yisheng
@@ -26,6 +27,7 @@ public class FTPCobis {
 
 	/**
 	 * cambio de claves del servidor login y password
+	 * 
 	 * @param segura verifica si es la conexion es ftp o sftp
 	 */
 	private static void cambiarClaves(boolean segura) {
@@ -51,26 +53,24 @@ public class FTPCobis {
 			System.out.println("Probando sus nuevas credenciales");
 			if (segura) {
 				System.out.println("Probando conexion SFTP");
-				
-				 probarConexionSegura();
+
+				probarConexionSegura();
+			} else {
+				probarConexion();
 			}
-			else {
-				probarConexion();	
-			}
-			
+
 		} else {
 			System.out.println("Las claves no coinciden por favor repetir la operación");
 		}
 
 	}
-	
+
 	/**
 	 * cambio de claves del servidor login y password
 	 */
 	private static void cambiarClavesSegura() {
 		cambiarClaves(true);
 	}
-	
 
 	private static void cargarArchivo() {
 		cargarPropiedades();
@@ -79,6 +79,21 @@ public class FTPCobis {
 		if (conexion.isLogin()) {
 			conexion.putFile();
 			conexion.cerrar();
+		}
+	}
+
+	private static void cargarArchivoSeguro() {
+		cargarPropiedades();
+		final Archivo archivo = new Archivo(propiedades, 'E');
+		final Sftpyileone conexion = new Sftpyileone(archivo, false);
+		if (conexion.isLogin()) {
+			conexion.putFile();
+			try {
+				conexion.cerrar();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -137,6 +152,8 @@ public class FTPCobis {
 			probarConexion();
 		} else if (args[0].equals("-C")) {
 			cargarArchivo();
+		} else if (args[0].equals("-Q")) {
+			cargarArchivoSeguro();
 		} else if (args[0].equals("-H")) {
 			pasarHistorico();
 		} else if (args[0].equals("-K")) {
@@ -149,8 +166,8 @@ public class FTPCobis {
 			cambiarClaves(false);
 		} else if (args[0].equals("-M")) {
 			cambiarClavesSegura();
-		} else if (args[0].equals("-S")) {
-			probarConexionSegura();
+		} else if (args[0].equals("-W")) {
+			probarConexionSeguraJsch();
 		} else if (args[0].equals("-D")) {
 			despertarDemonio();
 
@@ -174,12 +191,13 @@ public class FTPCobis {
 		System.out.println("* -O obtiene el archivo de entrada del servidor FTP *");
 		System.out.println("* -T prueba la conexion con el servidor FTP *");
 		System.out.println("* -C carga el archivo de salida al servidor FTP *");
+		System.out.println("* -q carga el archivo de salida al servidor SFTP *");
 		System.out.println("* -H Pase a histórico  *");
 		System.out.println("* -K Generador de claves para crt *");
 		System.out.println("* -G Generador de claves  *");
 		System.out.println("* -N nueva login y clave del servidor ftp  *");
 		System.out.println("* -M nueva login y clave del servidor Sftp  *");
-		System.out.println("* -S Probar conexion segura configurada  *");
+		System.out.println("* -W Probar conexion segura  configurada  *");
 		System.out.println("* -D Despertar el demonio  *");
 		System.out.println("********************************");
 
@@ -229,6 +247,7 @@ public class FTPCobis {
 
 		}
 	}
+
 	/**
 	 * Testea la conexión
 	 */
@@ -239,6 +258,22 @@ public class FTPCobis {
 		if (conexion.isLogin()) {
 			System.out.println("**************  CONEXION SEGURA ESTABLECIDA CON : " + propiedades.getServidorFtp());
 			conexion.cerrar();
+		} else {
+			System.out.println("**************   ERROR EN CONEXION SEGURA****** " + propiedades.getServidorFtp());
+
+		}
+	}
+
+	/**
+	 * Testea la conexión
+	 */
+	private static void probarConexionSeguraJsch() {
+		cargarPropiedades();
+		final Archivo archivo = new Archivo(propiedades, 'E');
+		final Sftpyileone conexion = new Sftpyileone(archivo, true);
+		if (conexion.isLogin()) {
+			System.out.println("**************  CONEXION SEGURA ESTABLECIDA CON : " + propiedades.getServidorFtp());
+
 		} else {
 			System.out.println("**************   ERROR EN CONEXION SEGURA****** " + propiedades.getServidorFtp());
 
