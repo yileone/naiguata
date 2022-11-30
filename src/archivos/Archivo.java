@@ -138,6 +138,42 @@ public class Archivo {
 		}
 		return resp;
 	}
+/**
+ * 
+ * @param carpeta
+ * @param archivo
+ * @return
+ * @throws IOException
+ */
+	private boolean renombrarArchivo(String carpeta, String archivo) throws IOException 
+		{
+			
+		
+			return renombrarArchivo(carpeta, archivo, fecha());
+		}
+	
+/**
+ * 
+ * @param carpeta
+ * @param archivo
+ * @param append
+ * @return
+ * @throws IOException
+ */
+	private boolean renombrarArchivo(String carpeta, String archivo, String append) throws IOException {
+
+		
+			 File oldfile = new File(carpeta+archivo);
+		     File newfile = new File(append+carpeta+archivo);
+		        if (oldfile.renameTo(newfile)) {
+		            System.out.println("archivo renombrado");
+		        } else {
+		            System.out.println("error");
+		            return false;
+		        }
+		        return true;
+		 
+	}
 
 	/**
 	 * copia el archivo y lo renombra con su prefijo historico
@@ -207,10 +243,11 @@ public class Archivo {
 		
 		if (copy(propiedades.getCarpEntrada(), propiedades.getCarpHistEnt())) {
 			borrardirectorio(new File(propiedades.getCarpEntrada()));
-
+			renombrarArchivo(propiedades.getCarpHistEnt(), propiedades.getArchivoEntrada());
 		}
 		if (copy(propiedades.getCarpSalida(), propiedades.getCarpHistSal())) {
 			borrardirectorio(new File(propiedades.getCarpSalida()));
+			renombrarArchivo(propiedades.getCarpHistSal(), propiedades.getArchivoSalida());
 		}
 	}
 
