@@ -158,8 +158,6 @@ public class FTPCobis {
 			pasarHistorico();
 		} else if (args[0].equals("-K")) {
 			generaClaves();
-		} else if (args[0].equals("-H")) {
-			pasarHistorico();
 		} else if (args[0].equals("-G")) {
 			generarClaveAleatoria();
 		} else if (args[0].equals("-N")) {

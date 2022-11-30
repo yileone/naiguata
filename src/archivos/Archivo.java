@@ -203,6 +203,8 @@ public class Archivo {
 	 * @throws IOException
 	 */
 	public void paseHistorico() throws IOException {
+		
+		
 		if (copy(propiedades.getCarpEntrada(), propiedades.getCarpHistEnt())) {
 			borrardirectorio(new File(propiedades.getCarpEntrada()));
 

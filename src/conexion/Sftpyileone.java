@@ -11,6 +11,8 @@ package conexion;
 import archivos.Archivo;
 import java.io.IOException;
 import javax.management.JMRuntimeException;
+import javax.sound.midi.MidiDevice.Info;
+
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
@@ -54,10 +56,12 @@ public class Sftpyileone {
 
 		try {
 			JSch jsch = new JSch();
-			//jsch.setKnownHosts("servidores.conocidos");
+			// jsch.setKnownHosts("servidores.conocidos");
 			Session session = jsch.getSession(user, host, port);
-			java.util.Properties config = new java.util.Properties(); 
+
+			java.util.Properties config = new java.util.Properties();
 			config.put("StrictHostKeyChecking", "no");
+			session.setConfig("HashKnownHosts", "no");
 			session.setConfig(config);
 			session.setPassword(password);
 			if (debug) {
@@ -151,7 +155,7 @@ public class Sftpyileone {
 		final String directorioServidor = archivo.getPropiedades().getCarpEntrada();
 		final String nombreArchivoServidor = archivo.getPropiedades().getArchivoEntrada();
 		final String directorio = archivo.getPropiedades().getCarpSalida();
-		final String nombreArchivo = archivo.getPropiedades().getCarpSalida();
+		final String nombreArchivo = archivo.getPropiedades().getArchivoSalida();
 		return putFile(directorio + nombreArchivo, directorioServidor + nombreArchivoServidor);
 	}
 
@@ -162,9 +166,14 @@ public class Sftpyileone {
 	 * @return
 	 */
 	public boolean putFile(String srcFilePath, String destPath) {
-		System.out.println("srcFilePath:"+srcFilePath);
-		System.out.println("destPath:"+destPath);
-		
+		System.out.println("ruta origen:" + srcFilePath);
+		System.out.println("ruta destino:" + destPath);
+		if ((srcFilePath == "") || (destPath == "")) {
+
+			System.out.println("Las ruta de destino y del servidor origen no pueden estar vacías");
+			return false;
+		}
+
 		boolean success;
 		success = true;
 		try {
