@@ -138,41 +138,39 @@ public class Archivo {
 		}
 		return resp;
 	}
-/**
- * 
- * @param carpeta
- * @param archivo
- * @return
- * @throws IOException
- */
-	private boolean renombrarArchivo(String carpeta, String archivo) throws IOException 
-		{
-			
-		
-			return renombrarArchivo(carpeta, archivo, fecha());
-		}
-	
-/**
- * 
- * @param carpeta
- * @param archivo
- * @param append
- * @return
- * @throws IOException
- */
+
+	/**
+	 * 
+	 * @param carpeta
+	 * @param archivo
+	 * @return
+	 * @throws IOException
+	 */
+	private boolean renombrarArchivo(String carpeta, String archivo) throws IOException {
+
+		return renombrarArchivo(carpeta, archivo, fecha());
+	}
+
+	/**
+	 * 
+	 * @param carpeta
+	 * @param archivo
+	 * @param append  lo que se le agrega al archivo para cambiarle el nombre
+	 * @return
+	 * @throws IOException
+	 */
 	private boolean renombrarArchivo(String carpeta, String archivo, String append) throws IOException {
 
-		
-			 File oldfile = new File(carpeta+archivo);
-		     File newfile = new File(append+carpeta+archivo);
-		        if (oldfile.renameTo(newfile)) {
-		            System.out.println("archivo renombrado");
-		        } else {
-		            System.out.println("error");
-		            return false;
-		        }
-		        return true;
-		 
+		File oldfile = new File(carpeta + archivo);
+		File newfile = new File(append + carpeta + archivo);
+		if (oldfile.renameTo(newfile)) {
+			System.out.println("archivo renombrado");
+		} else {
+			System.out.println("error");
+			return false;
+		}
+		return true;
+
 	}
 
 	/**
@@ -239,8 +237,7 @@ public class Archivo {
 	 * @throws IOException
 	 */
 	public void paseHistorico() throws IOException {
-		
-		
+
 		if (copy(propiedades.getCarpEntrada(), propiedades.getCarpHistEnt())) {
 			borrardirectorio(new File(propiedades.getCarpEntrada()));
 			renombrarArchivo(propiedades.getCarpHistEnt(), propiedades.getArchivoEntrada());
@@ -252,24 +249,21 @@ public class Archivo {
 	}
 
 	/**
-	 * @param archivo
-	 *            the archivo to set
+	 * @param archivo the archivo to set
 	 */
 	public void setArchivo(File archivo) {
 		this.archivo = archivo;
 	}
 
 	/**
-	 * @param propiedades
-	 *            the propiedades to set
+	 * @param propiedades the propiedades to set
 	 */
 	public void setPropiedades(Propiedades propiedades) {
 		this.propiedades = propiedades;
 	}
 
 	/**
-	 * @param tipo
-	 *            the tipo to set
+	 * @param tipo the tipo to set
 	 */
 	public void setTipo(char tipo) {
 		this.tipo = tipo;

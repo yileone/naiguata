@@ -11,7 +11,7 @@ package conexion;
 import archivos.Archivo;
 import java.io.IOException;
 import javax.management.JMRuntimeException;
-import javax.sound.midi.MidiDevice.Info;
+
 
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;
