@@ -78,8 +78,8 @@ public class FtpNaiguata {
 	 * @return
 	 */
 	public boolean getFile() {
-		final String directorio = archivo.getPropiedades().getCarpSalida();
-		final String nombreArchivo = archivo.getPropiedades().getArchivoSalida();
+		final String directorio = archivo.getPropiedades().getCarpDestino();
+		final String nombreArchivo = archivo.getPropiedades().getArchivoDestino();
 		return getFile(directorio, nombreArchivo);
 	}
 
@@ -148,8 +148,8 @@ public class FtpNaiguata {
 
 	public boolean putFile() {
 
-		final String directorio = archivo.getPropiedades().getCarpEntrada();
-		final String nombreArchivo = archivo.getPropiedades().getArchivoEntrada();
+		final String directorio = archivo.getPropiedades().getCarpLocal();
+		final String nombreArchivo = archivo.getPropiedades().getArchivoLocal();
 		return putFile(directorio, nombreArchivo);
 	}
 

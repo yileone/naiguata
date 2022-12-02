@@ -4,7 +4,6 @@
 package archivos;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Calendar;
@@ -41,14 +40,270 @@ public class Propiedades {
 	private String archivoPropiedades;
 	private String servidorFtp;
 	private int servidorPuerto;
-	private String carpEntrada;
-	private String carpSalida;
-	private String carpHistEnt;
-	private String carpHistSal;
+	private String carpLocal;
+	private String carpDestino;
+	private String carpHistLocal;
+	private String carpHistDestinoString;
 	private String login;
 	private String Clave;
-	private String ArchivoEntrada;
-	private String ArchivoSalida;
+	private String ArchivoLocal;
+	private String ArchivoLocal2;
+	private String ArchivoLocal3;
+	private String ArchivoLocal4;
+	private String ArchivoLocal5;
+	private String ArchivoLocal6;
+	
+	/**
+	 * @return the archivoDestino2
+	 */
+	public String getArchivoDestino2() {
+		return archivoDestino2;
+	}
+
+	/**
+	 * @param archivoDestino2 the archivoDestino2 to set
+	 */
+	public void setArchivoDestino2(String archivoDestino2) {
+		this.archivoDestino2 = archivoDestino2;
+	}
+
+	/**
+	 * @return the archivoDestino3
+	 */
+	public String getArchivoDestino3() {
+		return archivoDestino3;
+	}
+
+	/**
+	 * @param archivoDestino3 the archivoDestino3 to set
+	 */
+	public void setArchivoDestino3(String archivoDestino3) {
+		this.archivoDestino3 = archivoDestino3;
+	}
+
+	/**
+	 * @return the archivoDestino4
+	 */
+	public String getArchivoDestino4() {
+		return archivoDestino4;
+	}
+
+	/**
+	 * @param archivoDestino4 the archivoDestino4 to set
+	 */
+	public void setArchivoDestino4(String archivoDestino4) {
+		this.archivoDestino4 = archivoDestino4;
+	}
+
+	/**
+	 * @return the archivoDestino5
+	 */
+	public String getArchivoDestino5() {
+		return archivoDestino5;
+	}
+
+	/**
+	 * @param archivoDestino5 the archivoDestino5 to set
+	 */
+	public void setArchivoDestino5(String archivoDestino5) {
+		this.archivoDestino5 = archivoDestino5;
+	}
+
+	/**
+	 * @return the archivoDestino6
+	 */
+	public String getArchivoDestino6() {
+		return archivoDestino6;
+	}
+
+	/**
+	 * @param archivoDestino6 the archivoDestino6 to set
+	 */
+	public void setArchivoDestino6(String archivoDestino6) {
+		this.archivoDestino6 = archivoDestino6;
+	}
+
+	/**
+	 * @return the carpHistDestinoString
+	 */
+	public String getCarpHistDestinoString() {
+		return carpHistDestinoString;
+	}
+
+	private int CantidadArchivos;
+	private String archivoDestino;
+	private String archivoDestino2;
+	private String archivoDestino3;
+	private String archivoDestino4;
+	private String archivoDestino5;
+	private String archivoDestino6;
+	/**
+	 * @return the carpDestino
+	 */
+	public String getCarpDestino() {
+		return carpDestino;
+	}
+
+	/**
+	 * @param carpDestino the carpDestino to set
+	 */
+	public void setCarpDestino(String carpDestino) {
+		this.carpDestino = carpDestino;
+	}
+
+	/**
+	 * @return the carpHistLocal
+	 */
+	public String getCarpHistLocal() {
+		return carpHistLocal;
+	}
+
+	/**
+	 * @param carpHistLocal the carpHistLocal to set
+	 */
+	public void setCarpHistLocal(String carpHistLocal) {
+		this.carpHistLocal = carpHistLocal;
+	}
+
+	/**
+	 * @return the carpHistDestinoString
+	 */
+	public String getCarpHistDestino() {
+		return carpHistDestinoString;
+	}
+
+	/**
+	 * @param carpHistDestinoString the carpHistDestinoString to set
+	 */
+	public void setCarpHistDestino(String carpHistDestinoString) {
+		this.carpHistDestinoString = carpHistDestinoString;
+	}
+
+	/**
+	 * @return the archivoLocal
+	 */
+	public String getArchivoLocal() {
+		return ArchivoLocal;
+	}
+
+	/**
+	 * @param archivoLocal the archivoLocal to set
+	 */
+	public void setArchivoLocal(String archivoLocal) {
+		ArchivoLocal = archivoLocal;
+	}
+
+	/**
+	 * @return the archivoLocal2
+	 */
+	public String getArchivoLocal2() {
+		return ArchivoLocal2;
+	}
+
+	/**
+	 * @param archivoLocal2 the archivoLocal2 to set
+	 */
+	public void setArchivoLocal2(String archivoLocal2) {
+		ArchivoLocal2 = archivoLocal2;
+	}
+
+	/**
+	 * @return the archivoLocal3
+	 */
+	public String getArchivoLocal3() {
+		return ArchivoLocal3;
+	}
+
+	/**
+	 * @param archivoLocal3 the archivoLocal3 to set
+	 */
+	public void setArchivoLocal3(String archivoLocal3) {
+		ArchivoLocal3 = archivoLocal3;
+	}
+
+	/**
+	 * @return the archivoLocal4
+	 */
+	public String getArchivoLocal4() {
+		return ArchivoLocal4;
+	}
+
+	/**
+	 * @param archivoLocal4 the archivoLocal4 to set
+	 */
+	public void setArchivoLocal4(String archivoLocal4) {
+		ArchivoLocal4 = archivoLocal4;
+	}
+
+	/**
+	 * @return the archivoLocal5
+	 */
+	public String getArchivoLocal5() {
+		return ArchivoLocal5;
+	}
+
+	/**
+	 * @param archivoLocal5 the archivoLocal5 to set
+	 */
+	public void setArchivoLocal5(String archivoLocal5) {
+		ArchivoLocal5 = archivoLocal5;
+	}
+
+	/**
+	 * @return the archivoLocal6
+	 */
+	public String getArchivoLocal6() {
+		return ArchivoLocal6;
+	}
+
+	/**
+	 * @param archivoLocal6 the archivoLocal6 to set
+	 */
+	public void setArchivoLocal6(String archivoLocal6) {
+		ArchivoLocal6 = archivoLocal6;
+	}
+
+	/**
+	 * @return the archivoDestino
+	 */
+	public String getArchivoDestino() {
+		return archivoDestino;
+	}
+
+	/**
+	 * @param archivoDestino the archivoDestino to set
+	 */
+	public void setArchivoDestino(String archivoDestino) {
+		this.archivoDestino = archivoDestino;
+	}
+
+	/**
+	 * @return the carpLocal
+	 */
+	public String getCarpLocal() {
+		return carpLocal;
+	}
+
+	/**
+	 * @param carpLocal the carpLocal to set
+	 */
+	public void setCarpLocal(String carpLocal) {
+		this.carpLocal = carpLocal;
+	}
+
+	/**
+	 * @param archivoDefecto the archivoDefecto to set
+	 */
+	public static void setArchivoDefecto(String archivoDefecto) {
+		Propiedades.archivoDefecto = archivoDefecto;
+	}
+
+	/**
+	 * @param servidorPuerto the servidorPuerto to set
+	 */
+	public void setServidorPuerto(int servidorPuerto) {
+		this.servidorPuerto = servidorPuerto;
+	}
 
 	/**
 	 * propiedades de la configuración
@@ -75,28 +330,35 @@ public class Propiedades {
 		try {
 			propiedades.load(new FileInputStream(archivo));
 
-			setCarpEntrada(propiedades.getProperty("carpeta.Entrada"));
-			setCarpHistEnt(propiedades.getProperty("carpeta.HistEntrada"));
-			setCarpSalida(propiedades.getProperty("carpeta.Salida"));
-			setCarpHistSal(propiedades.getProperty("carpeta.HistSalida"));
+			setCarpLocal(propiedades.getProperty("carpeta.Local"));
+			setCarpHistLocal(propiedades.getProperty("carpeta.HistLocal"));
+			setCarpDestino(propiedades.getProperty("carpeta.Destino"));
+			setCarpHistDestino(propiedades.getProperty("carpeta.HistDestino"));
 			setClave(desencripta(propiedades.getProperty("servidor.clave")));
 			setServidorFtp(propiedades.getProperty("servidor.FTP", "localhost"));
 			setServidorPuerto(propiedades.getProperty("servidor.puerto", "21"));
 			setLogin(desencripta(propiedades.getProperty("servidor.login")));
-			setArchivoEntrada(propiedades.getProperty("archivo.entrada"));
-			setArchivoSalida(propiedades.getProperty("archivo.salida"));
-		} catch (final FileNotFoundException e) {
+			setArchivoLocal(propiedades.getProperty("archivo.local"));
+			setArchivoDestino(propiedades.getProperty("archivo.destino"));
+			setArchivoLocal2(propiedades.getProperty("archivo.local2"));
+			setArchivoDestino2(propiedades.getProperty("archivo.destino2"));
+			setArchivoLocal3(propiedades.getProperty("archivo.local3"));
+			setArchivoDestino3(propiedades.getProperty("archivo.destino3"));
+			setArchivoLocal4(propiedades.getProperty("archivo.local4"));
+			setArchivoDestino4(propiedades.getProperty("archivo.destino4"));
+			setArchivoLocal5(propiedades.getProperty("archivo.local5"));
+			setArchivoDestino5(propiedades.getProperty("archivo.destino5"));
+			setArchivoLocal6(propiedades.getProperty("archivo.local6"));
+			setArchivoDestino6(propiedades.getProperty("archivo.destino6"));
+			setCantidadArchivos(Integer.parseInt( propiedades.getProperty("archivos.cantidad")));
 			// TODO Auto-generated catch block
-			System.out.println("el archivo no existe");
-			e.printStackTrace();
+			
+			
 		} catch (final IOException e) {
-			// TODO Auto-generated catch block
+			System.out.println("el archivo no existe");
 			e.printStackTrace();
 		}
 	}
-
-	
-
 
 	/**
 	 *
@@ -125,53 +387,10 @@ public class Propiedades {
 	}
 
 	/**
-	 *
-	 * @return ArchivoEntradda
-	 */
-	public String getArchivoEntrada() {
-		return ArchivoEntrada;
-	}
-
-	/**
 	 * @return the archivoPropiedades
 	 */
 	public String getArchivoPropiedades() {
 		return archivoPropiedades;
-	}
-
-	/**
-	 * @return the archivoSalida
-	 */
-	public String getArchivoSalida() {
-		return ArchivoSalida;
-	}
-
-	/**
-	 * @return the carpEntrada
-	 */
-	public String getCarpEntrada() {
-		return carpEntrada;
-	}
-
-	/**
-	 * @return the carpHistEnt
-	 */
-	public String getCarpHistEnt() {
-		return carpHistEnt;
-	}
-
-	/**
-	 * @return the carpHistSal
-	 */
-	public String getCarpHistSal() {
-		return carpHistSal;
-	}
-
-	/**
-	 * @return the carpSalida
-	 */
-	public String getCarpSalida() {
-		return carpSalida;
 	}
 
 	/**
@@ -202,127 +421,84 @@ public class Propiedades {
 		return servidorFtp;
 	}
 
-	
-	
 	/**
 	 * @return the servidorFtp
 	 */
 	public int getServidorPuerto() {
 		return servidorPuerto;
 	}
+
 	/**
 	 * mostrar todos los atributos del archivo de propiedades
 	 */
 	public void mostrarAtributos() {
-		System.out.println("Carpeta.Entrada:" + getCarpEntrada());
-		System.out.println("carpeta.HistEntrada:" + getCarpHistEnt());
-		System.out.println("carpeta.Salida:" + getCarpSalida());
-		System.out.println("carpeta.HistSalida:" + getCarpHistSal());
+		System.out.println("Carpeta.Local:" + getCarpLocal());
+		System.out.println("carpeta.HistLocal:" + getCarpHistLocal());
+		System.out.println("carpeta.Destino:" + getCarpDestino());
+		System.out.println("carpeta.HistDestino:" + getCarpHistDestino());
 		System.out.println("servidor.clave:" + getClave());
 		System.out.println("servidor.FTP:" + getServidorFtp());
 		System.out.println("servidor.Puerto:" + getServidorPuerto());
 		System.out.println("servidor.login:" + getLogin());
-		System.out.println("archivo.entrada:" + getArchivoEntrada());
-		System.out.println("archivo.salida:" + getArchivoSalida());
+		System.out.println("archivo.local:" + getArchivoLocal());
+		System.out.println("archivo.local2:" + getArchivoLocal2());
+		System.out.println("archivo.destino:" + getArchivoDestino());
+		System.out.println("archivos.cantidad:" + getCantidadArchivos());
 	}
 
+	
 	/**
-	 *
-	 * @param archivoEntrada
-	 *            set archivoEntrada
-	 */
-	public void setArchivoEntrada(String archivoEntrada) {
-		ArchivoEntrada = archivoEntrada;
-	}
-
-	/**
-	 * @param archivoPropiedades
-	 *            the archivoPropiedades to set
+	 * @param archivoPropiedades the archivoPropiedades to set
 	 */
 	public void setArchivoPropiedades(String archivoPropiedades) {
 		this.archivoPropiedades = archivoPropiedades;
 	}
 
-	/**
-	 * @param archivoSalida
-	 *            the archivoSalida to set
-	 */
-	public void setArchivoSalida(String archivoSalida) {
-		ArchivoSalida = archivoSalida;
-	}
 
 	/**
-	 * @param carpEntrada
-	 *            the carpEntrada to set
-	 */
-	public void setCarpEntrada(String carpEntrada) {
-		this.carpEntrada = carpEntrada;
-	}
-
-	/**
-	 * @param carpHistEnt
-	 *            the carpHistEnt to set
-	 */
-	public void setCarpHistEnt(String carpHistEnt) {
-		this.carpHistEnt = carpHistEnt;
-	}
-
-	/**
-	 * @param carpHistSal
-	 *            the carpHistSal to set
-	 */
-	public void setCarpHistSal(String carpHistSal) {
-		this.carpHistSal = carpHistSal;
-	}
-
-	/**
-	 * @param carpSalida
-	 *            the carpSalida to set
-	 */
-	public void setCarpSalida(String carpSalida) {
-		this.carpSalida = carpSalida;
-	}
-
-	/**
-	 * @param clave
-	 *            the clave to set
+	 * @param clave the clave to set
 	 */
 	public void setClave(String clave) {
 		Clave = clave;
 	}
 
 	/**
-	 * @param login
-	 *            the login to set
+	 * @param login the login to set
 	 */
 	public void setLogin(String login) {
 		this.login = login;
 	}
 
 	/**
-	 * @param propiedades
-	 *            the propiedades to set
+	 * @param propiedades the propiedades to set
 	 */
 	public void setPropiedades(Properties propiedades) {
 		this.propiedades = propiedades;
 	}
 
 	/**
-	 * @param servidorFtp
-	 *            the servidorFtp to set
+	 * @param servidorFtp the servidorFtp to set
 	 */
 	public void setServidorFtp(String servidorFtp) {
 		this.servidorFtp = servidorFtp;
 	}
-	
+
 	/**
 	 * 
 	 * @param puertoServidor
 	 */
 	private void setServidorPuerto(String puertoServidor) {
 
-		this.servidorPuerto= Integer.parseInt(puertoServidor);
-		
+		this.servidorPuerto = Integer.parseInt(puertoServidor);
+
+	}
+
+	public int getCantidadArchivos() {
+		return CantidadArchivos;
+	}
+
+	public void setCantidadArchivos(int cantidadArchivos) {
+		CantidadArchivos = cantidadArchivos;
 	}
 
 }

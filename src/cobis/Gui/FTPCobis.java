@@ -97,6 +97,20 @@ public class FTPCobis {
 		}
 	}
 
+	private static void cargarDirectorioSeguro() {
+		cargarPropiedades();
+		final Archivo archivo = new Archivo(propiedades, 'E');
+		final Sftpyileone conexion = new Sftpyileone(archivo, false);
+		if (conexion.isLogin()) {
+			conexion.putDirectorio();
+			try {
+				conexion.cerrar();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 	private static void cargarPropiedades() {
 		propiedades = new Propiedades();
 	}
@@ -168,6 +182,10 @@ public class FTPCobis {
 			probarConexionSeguraJsch();
 		} else if (args[0].equals("-D")) {
 			despertarDemonio();
+		} else if (args[0].equals("-F")) {
+			cargarDirectorioSeguro();
+		} else if (args[0].equals("-C")) {
+			cargarCurazao();
 
 		} else if (args[0].equals("-?")) {
 			mostrarAyuda();
@@ -175,6 +193,30 @@ public class FTPCobis {
 			System.out.println(error);
 		}
 
+	}
+
+	private static void cargarCurazao() {
+		// TODO Auto-generated method stub
+		cargarPropiedades();
+		Archivo archivo = new Archivo(propiedades, 'E');
+		final Sftpyileone conexion = new Sftpyileone(archivo, false);
+		if (conexion.isLogin()) {
+			conexion.putDirectorio();
+		
+			try {
+				conexion.cerrar();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		archivo = new Archivo(propiedades, 'S');
+		try {
+			archivo.paseHistorico();
+		} catch (final IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -189,7 +231,8 @@ public class FTPCobis {
 		System.out.println("* -O obtiene el archivo de entrada del servidor FTP *");
 		System.out.println("* -T prueba la conexion con el servidor FTP *");
 		System.out.println("* -C carga el archivo de salida al servidor FTP *");
-		System.out.println("* -q carga el archivo de salida al servidor SFTP *");
+		System.out.println("* -Q carga el archivo de salida al servidor SFTP *");
+		System.out.println("* -F carga el directorio local al servidor SFTP *");
 		System.out.println("* -H Pase a histórico  *");
 		System.out.println("* -K Generador de claves para crt *");
 		System.out.println("* -G Generador de claves  *");
@@ -197,6 +240,7 @@ public class FTPCobis {
 		System.out.println("* -M nueva login y clave del servidor Sftp  *");
 		System.out.println("* -W Probar conexion segura  configurada  *");
 		System.out.println("* -D Despertar el demonio  *");
+		System.out.println("* -C Probar opción Curazao  *");
 		System.out.println("********************************");
 
 	}

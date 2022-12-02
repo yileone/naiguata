@@ -79,13 +79,27 @@ public class DemonioFtpCobis extends Thread {
 	}
 
 	public boolean verificarArchivo() {
-		File revisar;
+		boolean revisar;
 		if (estado == 'E') {
-			revisar = new File(archivo.getPropiedades().getCarpEntrada(), archivo.getPropiedades().getArchivoEntrada());
+			revisar = verificarArchivo(archivo.getPropiedades().getCarpLocal(), archivo.getPropiedades().getArchivoLocal());
 		} else {
-			revisar = new File(archivo.getPropiedades().getCarpSalida(), archivo.getPropiedades().getArchivoSalida());
+			revisar = verificarArchivo(archivo.getPropiedades().getCarpDestino(), archivo.getPropiedades().getArchivoDestino());
 
 		}
+		return revisar;
+	}
+	
+	/**
+	 * 
+	 * @param carpeta
+	 * @param nombreArchivo
+	 * @return
+	 */
+	public boolean verificarArchivo(String carpeta , String nombreArchivo) {
+		File revisar;
+		
+			revisar = new File(carpeta, nombreArchivo);
+
 		return revisar.exists();
 	}
 

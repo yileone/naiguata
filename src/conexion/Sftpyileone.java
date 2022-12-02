@@ -9,9 +9,10 @@ package conexion;
  */
 
 import archivos.Archivo;
+
+import java.io.File;
 import java.io.IOException;
 import javax.management.JMRuntimeException;
-
 
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;
@@ -34,9 +35,10 @@ public class Sftpyileone {
 
 	/**
 	 * 
+	 * @param archivo
+	 * @param debug
 	 */
 	public Sftpyileone(Archivo archivo, Boolean debug) {
-		// TODO Auto-generated constructor stub
 
 		setLogin(false);
 		this.archivo = archivo;
@@ -122,10 +124,10 @@ public class Sftpyileone {
 	 * @return
 	 */
 	public boolean getFile() {
-		final String directorio = archivo.getPropiedades().getCarpSalida();
-		final String nombreArchivo = archivo.getPropiedades().getArchivoSalida();
-		final String directorioServidor = archivo.getPropiedades().getCarpEntrada();
-		final String nombreArchivoServidor = archivo.getPropiedades().getArchivoEntrada();
+		final String directorio = archivo.getPropiedades().getCarpDestino();
+		final String nombreArchivo = archivo.getPropiedades().getArchivoDestino();
+		final String directorioServidor = archivo.getPropiedades().getCarpLocal();
+		final String nombreArchivoServidor = archivo.getPropiedades().getArchivoLocal();
 
 		return getFile(directorio + nombreArchivo, directorioServidor + nombreArchivoServidor);
 	}
@@ -152,11 +154,59 @@ public class Sftpyileone {
 
 	public boolean putFile() {
 
-		final String directorioServidor = archivo.getPropiedades().getCarpEntrada();
-		final String nombreArchivoServidor = archivo.getPropiedades().getArchivoEntrada();
-		final String directorio = archivo.getPropiedades().getCarpSalida();
-		final String nombreArchivo = archivo.getPropiedades().getArchivoSalida();
+		final String directorioServidor = archivo.getPropiedades().getCarpLocal();
+		final String nombreArchivoServidor = archivo.getPropiedades().getArchivoLocal();
+		final String directorio = archivo.getPropiedades().getCarpDestino();
+		final String nombreArchivo = archivo.getPropiedades().getArchivoDestino();
 		return putFile(directorio + nombreArchivo, directorioServidor + nombreArchivoServidor);
+	}
+
+	public boolean putDirectorio() {
+
+		String directorioServidor = archivo.getPropiedades().getCarpLocal();
+		String nombreArchivoServidor;
+		String directorio = archivo.getPropiedades().getCarpDestino();
+		String nombreArchivo;
+		boolean salida = true;
+		int contador = archivo.getPropiedades().getCantidadArchivos();
+		contador--;
+		if (contador >= 0) {
+			nombreArchivoServidor = archivo.getPropiedades().getArchivoLocal();
+			nombreArchivo = archivo.getPropiedades().getArchivoDestino();
+			salida = salida && putFile(directorio + nombreArchivo, directorioServidor + nombreArchivoServidor);
+		}
+		contador--;
+		if (contador >= 0) {
+			nombreArchivoServidor = archivo.getPropiedades().getArchivoLocal2();
+			nombreArchivo = archivo.getPropiedades().getArchivoDestino2();
+			salida = salida && putFile(directorio + nombreArchivo, directorioServidor + nombreArchivoServidor);
+		}
+		contador--;
+		if (contador >= 0) {
+			nombreArchivoServidor = archivo.getPropiedades().getArchivoLocal3();
+			nombreArchivo = archivo.getPropiedades().getArchivoDestino3();
+			salida = salida && putFile(directorio + nombreArchivo, directorioServidor + nombreArchivoServidor);
+		}
+		contador--;
+		if (contador >= 0) {
+			nombreArchivoServidor = archivo.getPropiedades().getArchivoLocal4();
+			nombreArchivo = archivo.getPropiedades().getArchivoDestino4();
+			salida = salida && putFile(directorio + nombreArchivo, directorioServidor + nombreArchivoServidor);
+		}
+		contador--;
+		if (contador >= 0) {
+			nombreArchivoServidor = archivo.getPropiedades().getArchivoLocal5();
+			nombreArchivo = archivo.getPropiedades().getArchivoDestino5();
+			salida = salida && putFile(directorio + nombreArchivo, directorioServidor + nombreArchivoServidor);
+		}
+		contador--;
+		if (contador >= 0) {
+			nombreArchivoServidor = archivo.getPropiedades().getArchivoLocal6();
+			nombreArchivo = archivo.getPropiedades().getArchivoDestino6();
+			salida = salida && putFile(directorio + nombreArchivo, directorioServidor + nombreArchivoServidor);
+		}
+		
+		return salida;
 	}
 
 	/**
@@ -178,8 +228,10 @@ public class Sftpyileone {
 		success = true;
 		try {
 			getCliente().put(srcFilePath, destPath);
+
 		} catch (SftpException e) {
 			success = false;
+			System.out.println("error subiendo archivo:" + srcFilePath);
 			System.out.println(e.getMessage());
 			throw new JMRuntimeException();
 
@@ -187,6 +239,42 @@ public class Sftpyileone {
 
 		return success;
 
+	}
+
+	/**
+	 * 
+	 * @param sourcePath
+	 * @param destPath
+	 * @return
+	 */
+	Boolean copiarDirectorio(String sourcePath, String destPath) {
+		File localFile = new File(sourcePath);
+
+		if (localFile.isDirectory()) {
+			try {
+				getCliente().cd(destPath);
+			} catch (SftpException e) {
+
+				e.printStackTrace();
+				return false;
+			}
+
+			for (File file : localFile.listFiles()) {
+				System.out.println("copiando " + sourcePath + file.getName());
+				putFile(sourcePath + file.getName(), destPath);
+			}
+
+			try {
+				getCliente().cd(destPath.substring(0, destPath.lastIndexOf('/')));
+			} catch (SftpException e) {
+				e.printStackTrace();
+				return false;
+			}
+		} else {
+			System.out.println("Error el origen no es un directorio ");
+			return false;
+		}
+		return true;
 	}
 
 	/**

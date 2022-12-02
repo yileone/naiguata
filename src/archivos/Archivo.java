@@ -147,7 +147,6 @@ public class Archivo {
 	 * @throws IOException
 	 */
 	private boolean renombrarArchivo(String carpeta, String archivo) throws IOException {
-
 		return renombrarArchivo(carpeta, archivo, fecha());
 	}
 
@@ -162,11 +161,11 @@ public class Archivo {
 	private boolean renombrarArchivo(String carpeta, String archivo, String append) throws IOException {
 
 		File oldfile = new File(carpeta + archivo);
-		File newfile = new File(append + carpeta + archivo);
+		File newfile = new File( carpeta + append +archivo);
 		if (oldfile.renameTo(newfile)) {
-			System.out.println("archivo renombrado");
+			System.out.println("archivo renombrado:"+newfile.getName());
 		} else {
-			System.out.println("error");
+			System.out.println("error al renombrar "+newfile.getName());
 			return false;
 		}
 		return true;
@@ -232,20 +231,43 @@ public class Archivo {
 		return tipo;
 	}
 
+	
 	/**
-	 *
+	 * solo pasa a historico care
 	 * @throws IOException
 	 */
 	public void paseHistorico() throws IOException {
+		paseHistorico(1);
+	}
 
-		if (copy(propiedades.getCarpEntrada(), propiedades.getCarpHistEnt())) {
-			borrardirectorio(new File(propiedades.getCarpEntrada()));
-			renombrarArchivo(propiedades.getCarpHistEnt(), propiedades.getArchivoEntrada());
+	/**
+	 * 
+	 * @param carpeta valor 1 solo carpeta local , 2 solo carpeta histórica 3 ambas
+	 *                carpetas
+	 * @throws IOException
+	 */
+	public void paseHistorico(int carpeta) throws IOException {
+
+		if (carpeta == 3 || carpeta == 2) {
+			if (copy(propiedades.getCarpDestino(), propiedades.getCarpHistDestino())) {
+				borrardirectorio(new File(propiedades.getCarpDestino()));
+				
+				renombrarArchivo(propiedades.getCarpHistDestino(), propiedades.getArchivoDestino());
+			}
 		}
-		if (copy(propiedades.getCarpSalida(), propiedades.getCarpHistSal())) {
-			borrardirectorio(new File(propiedades.getCarpSalida()));
-			renombrarArchivo(propiedades.getCarpHistSal(), propiedades.getArchivoSalida());
+
+		if (carpeta == 3 || carpeta == 1)
+
+		{
+			if (copy(propiedades.getCarpLocal(), propiedades.getCarpHistLocal())) {
+				borrardirectorio(new File(propiedades.getCarpLocal()));
+				renombrarArchivo(propiedades.getCarpHistLocal(), propiedades.getArchivoLocal());
+			    renombrarArchivo(propiedades.getCarpHistLocal(), propiedades.getArchivoLocal2());
+				
+				
+			}
 		}
+
 	}
 
 	/**
@@ -267,6 +289,22 @@ public class Archivo {
 	 */
 	public void setTipo(char tipo) {
 		this.tipo = tipo;
+	}
+
+	
+	
+	/**
+	 * 
+	 * @param carpeta
+	 * @param nombreArchivo
+	 * @return
+	 */
+	public boolean verificarArchivo(String carpeta , String nombreArchivo) {
+		File revisar;
+		
+			revisar = new File(carpeta, nombreArchivo);
+
+		return revisar.exists();
 	}
 
 }
