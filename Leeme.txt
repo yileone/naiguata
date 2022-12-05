@@ -1,0 +1,41 @@
+yISHENG lIANG eSPINOZA
+yisheng@yileone.com
+@yileone -- www.yileone.com
+
+
+para ejecutar la tarea usar el comando
+		java -jar YileoneSftp.jar -X
+para ejecutar la ayuda usar el comando
+		java -jar YileoneSftp.jar -?
+Ayuda del properties
+	* en esta versión no se activo el envio de correo 
+notificacion.envio=>   email
+email.asunto=> asunto de correo
+email.remitente=> remitente direccion de email
+notificacion.destinatario=> destinatario direccion de email si quiere enviar varios usar punto y coma ;
+notificacion.servidor=> servidor de envio de correos normalmente 10.0.38.25
+notificacion.puerto=> puerto de envio de correo normalmente 25
+notificacion.usuario=> usuario servidor de correos cMBOza6gWWcVSU38OrdjSA\=\=
+notificacion.clave=claver servidor de correoss 1o9WfjT9wpv9lGYCj8L6wQ\=\=
+
+servidor.puerto=> puerto sftp normalmente 22 puerto ftp 21
+servidor.FTP=> direccion ip -> curacao172.31.220.70
+servidor.login>= login va encriptado usar las opciones 
+servidor.clave=> CLAVE va encriptado usar las opciones 
+
+
+servidor.archivo=LIQUIDACIONES_NETAS
+carpeta.HistDestino=> dIRECCION DE CARPETA HISTORICA DESTINO NO HABILITADO EN ESTA VERSION
+carpeta.HistLocal=> DIRECION DE CARPETA HISTORICA EN ESTE SERVIDOR
+carpeta.Local=> DIRECCION DE CARPETA ACTUAL
+carpeta.Destino=> DIRECCIÓN DE CARPETA EN EL SERVIDOR FTP NORMALMENTE SOLO /
+
+archivo.local=NOMBRE DE ARCHIVOS A ENVIAR
+archivo.local2=Prueba_entrada2.txt
+.
+.
+.
+HASTA ARCHIVO 6
+archivo.destino=> NOMBRE QUE SE LE DESEA PONER EN EL SERVIDOR DESTINO NORMALMENTE VACIO PARA TENER EL MISMO NOMBRE
+archivo.destino2> NOMBRE QUE SE LE DESEA PONER EN EL SERVIDOR DESTINO NORMALMENTE VACIO PARA TENER EL MISMO NOMBRE
+archivos.cantidad=> CANTIDAD DE ARCHIVOS A ENVIAR EN ESTA VERSION HASTA 6

@@ -157,9 +157,9 @@ public class FTPCobis {
 	public static void main(String[] args) {
 		if (args.length != 1) {
 			System.out.println(error);
-		} else if (args[0].equals("-P")) {
-			cargarPropiedades();
-			mostrarPropiedades();
+		//} else if (args[0].equals("-P")) {
+		//	cargarPropiedades();
+		//	mostrarPropiedades();
 		} else if (args[0].equals("-O")) {
 			obtenerArchivo();
 		} else if (args[0].equals("-T")) {
@@ -184,7 +184,8 @@ public class FTPCobis {
 			despertarDemonio();
 		} else if (args[0].equals("-F")) {
 			cargarDirectorioSeguro();
-		} else if (args[0].equals("-C")) {
+		} else if (args[0].equals("-X")) {
+			//System.out.println("curazao alla voy");
 			cargarCurazao();
 
 		} else if (args[0].equals("-?")) {
@@ -199,8 +200,10 @@ public class FTPCobis {
 		// TODO Auto-generated method stub
 		cargarPropiedades();
 		Archivo archivo = new Archivo(propiedades, 'E');
+		//System.out.println("entrando");
 		final Sftpyileone conexion = new Sftpyileone(archivo, false);
 		if (conexion.isLogin()) {
+		//	System.out.println("conectado");
 			conexion.putDirectorio();
 		
 			try {
@@ -214,6 +217,13 @@ public class FTPCobis {
 		try {
 			archivo.paseHistorico();
 		} catch (final IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			conexion.cerrar();
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

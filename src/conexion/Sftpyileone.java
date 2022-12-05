@@ -97,6 +97,7 @@ public class Sftpyileone {
 		if (cliente.isConnected()) {
 
 			cliente.disconnect();
+			
 		}
 	}
 
@@ -154,55 +155,65 @@ public class Sftpyileone {
 
 	public boolean putFile() {
 
-		final String directorioServidor = archivo.getPropiedades().getCarpLocal();
-		final String nombreArchivoServidor = archivo.getPropiedades().getArchivoLocal();
-		final String directorio = archivo.getPropiedades().getCarpDestino();
-		final String nombreArchivo = archivo.getPropiedades().getArchivoDestino();
+		final String directorio = archivo.getPropiedades().getCarpLocal();
+		final String nombreArchivo = archivo.getPropiedades().getArchivoLocal();
+		final String directorioServidor = archivo.getPropiedades().getCarpDestino();
+		final String nombreArchivoServidor = archivo.getPropiedades().getArchivoDestino();
 		return putFile(directorio + nombreArchivo, directorioServidor + nombreArchivoServidor);
 	}
 
 	public boolean putDirectorio() {
-
-		String directorioServidor = archivo.getPropiedades().getCarpLocal();
+		//System.out.println("entrar en put directorio");
+		String directorioServidor = archivo.getPropiedades().getCarpDestino();
 		String nombreArchivoServidor;
-		String directorio = archivo.getPropiedades().getCarpDestino();
+		String directorio = archivo.getPropiedades().getCarpLocal();
 		String nombreArchivo;
 		boolean salida = true;
 		int contador = archivo.getPropiedades().getCantidadArchivos();
+		
+		//System.out.println("chino qque mierda pasa");
+		//archivo.getPropiedades().mostrarAtributos();
 		contador--;
 		if (contador >= 0) {
-			nombreArchivoServidor = archivo.getPropiedades().getArchivoLocal();
-			nombreArchivo = archivo.getPropiedades().getArchivoDestino();
+			nombreArchivo = archivo.getPropiedades().getArchivoLocal();
+			nombreArchivoServidor = archivo.getPropiedades().getArchivoDestino();
+		//	System.out.println("origen:"+directorio + nombreArchivo);
+		//	System.out.println("destino:"+directorioServidor + nombreArchivoServidor);
 			salida = salida && putFile(directorio + nombreArchivo, directorioServidor + nombreArchivoServidor);
 		}
 		contador--;
 		if (contador >= 0) {
-			nombreArchivoServidor = archivo.getPropiedades().getArchivoLocal2();
-			nombreArchivo = archivo.getPropiedades().getArchivoDestino2();
+			nombreArchivo = archivo.getPropiedades().getArchivoLocal2();
+			nombreArchivoServidor = archivo.getPropiedades().getArchivoDestino2();
+			//System.out.println("origen:"+directorio + nombreArchivo);
+			//System.out.println("destino:"+directorioServidor + nombreArchivoServidor);
+		
+			salida = salida && putFile(directorio + nombreArchivo, directorioServidor + nombreArchivoServidor);
+		}
+		
+		contador--;
+		//System.out.println("contador:"+contador);
+		if (contador >= 0) {
+			nombreArchivo = archivo.getPropiedades().getArchivoLocal3();
+			nombreArchivoServidor = archivo.getPropiedades().getArchivoDestino3();
 			salida = salida && putFile(directorio + nombreArchivo, directorioServidor + nombreArchivoServidor);
 		}
 		contador--;
 		if (contador >= 0) {
-			nombreArchivoServidor = archivo.getPropiedades().getArchivoLocal3();
-			nombreArchivo = archivo.getPropiedades().getArchivoDestino3();
+			nombreArchivo = archivo.getPropiedades().getArchivoLocal4();
+			nombreArchivoServidor = archivo.getPropiedades().getArchivoDestino4();
 			salida = salida && putFile(directorio + nombreArchivo, directorioServidor + nombreArchivoServidor);
 		}
 		contador--;
 		if (contador >= 0) {
-			nombreArchivoServidor = archivo.getPropiedades().getArchivoLocal4();
-			nombreArchivo = archivo.getPropiedades().getArchivoDestino4();
+			nombreArchivo = archivo.getPropiedades().getArchivoLocal5();
+			nombreArchivoServidor = archivo.getPropiedades().getArchivoDestino5();
 			salida = salida && putFile(directorio + nombreArchivo, directorioServidor + nombreArchivoServidor);
 		}
 		contador--;
 		if (contador >= 0) {
-			nombreArchivoServidor = archivo.getPropiedades().getArchivoLocal5();
-			nombreArchivo = archivo.getPropiedades().getArchivoDestino5();
-			salida = salida && putFile(directorio + nombreArchivo, directorioServidor + nombreArchivoServidor);
-		}
-		contador--;
-		if (contador >= 0) {
-			nombreArchivoServidor = archivo.getPropiedades().getArchivoLocal6();
-			nombreArchivo = archivo.getPropiedades().getArchivoDestino6();
+			nombreArchivo = archivo.getPropiedades().getArchivoLocal6();
+			nombreArchivoServidor = archivo.getPropiedades().getArchivoDestino6();
 			salida = salida && putFile(directorio + nombreArchivo, directorioServidor + nombreArchivoServidor);
 		}
 		
@@ -216,6 +227,7 @@ public class Sftpyileone {
 	 * @return
 	 */
 	public boolean putFile(String srcFilePath, String destPath) {
+		System.out.println("ruta origen -----");
 		System.out.println("ruta origen:" + srcFilePath);
 		System.out.println("ruta destino:" + destPath);
 		if ((srcFilePath == "") || (destPath == "")) {
