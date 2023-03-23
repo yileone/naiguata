@@ -155,9 +155,9 @@ public class FTPCobis {
 	public static void main(String[] args) {
 		if (args.length != 1) {
 			System.out.println(error);
-		//} else if (args[0].equals("-P")) {
-		//	cargarPropiedades();
-		//	mostrarPropiedades();
+		} else if (args[0].equals("-P")) {
+			cargarPropiedades();
+			mostrarPropiedades();
 		} else if (args[0].equals("-O")) {
 			obtenerArchivo();
 		} else if (args[0].equals("-T")) {
@@ -185,6 +185,9 @@ public class FTPCobis {
 		} else if (args[0].equals("-X")) {
 			//System.out.println("curazao alla voy");
 			cargarCurazao();
+		} else if (args[0].equals("-R")) {
+			//System.out.println("curazao alla voy");
+			renombraArchivo();
 
 		} else if (args[0].equals("-?")) {
 			mostrarAyuda();
@@ -248,7 +251,8 @@ public class FTPCobis {
 		System.out.println("* -M nueva login y clave del servidor Sftp  *");
 		System.out.println("* -W Probar conexion segura  configurada  *");
 		System.out.println("* -D Despertar el demonio  *");
-		System.out.println("* -C Probar opción Curazao  *");
+		System.out.println("* -X Probar opción Curazao  *");
+		System.out.println("* -R Renombrar archivos  *");
 		System.out.println("********************************");
 
 	}
@@ -257,6 +261,28 @@ public class FTPCobis {
 		propiedades.mostrarAtributos();
 	}
 
+	/**
+	 * Obtiene archivo del servidor FtP
+	 */
+	private static void renombraArchivo() {
+		cargarPropiedades();
+		final Archivo archivo = new Archivo(propiedades, 'E');
+		
+		
+		try {
+			if (archivo.copy(propiedades.getCarpLocal(), propiedades.getCarpHistLocal())) {
+				
+			archivo.renombrarArchivo(propiedades.getCarpHistLocal(), propiedades.getArchivoLocal(),propiedades.getArchivoDestino(),true);
+			archivo.renombrarArchivo(propiedades.getCarpHistLocal(), propiedades.getArchivoLocal2(),propiedades.getArchivoDestino2(),true);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
 	/**
 	 * Obtiene archivo del servidor FtP
 	 */

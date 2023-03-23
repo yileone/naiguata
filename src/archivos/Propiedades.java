@@ -443,6 +443,7 @@ public class Propiedades {
 		System.out.println("archivo.local:" + getArchivoLocal());
 		System.out.println("archivo.local2:" + getArchivoLocal2());
 		System.out.println("archivo.destino:" + getArchivoDestino());
+		System.out.println("archivo.destino2:" + getArchivoDestino2());
 		System.out.println("archivos.cantidad:" + getCantidadArchivos());
 	}
 

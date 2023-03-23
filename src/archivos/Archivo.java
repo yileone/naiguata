@@ -105,7 +105,7 @@ public class Archivo {
 	 * @return
 	 * @throws IOException
 	 */
-	private boolean copy(String sSourceLocation, String stargetLocation) throws IOException {
+	public boolean copy(String sSourceLocation, String stargetLocation) throws IOException {
 		final File sourceLocation = new File(sSourceLocation);
 		File targetLocation = new File(stargetLocation);
 		boolean resp = true;
@@ -150,6 +150,41 @@ public class Archivo {
 		return renombrarArchivo(carpeta, archivo, fecha());
 	}
 
+
+/**
+ * 
+ * @param carpeta
+ * @param archivo
+ * @param nuevoNombre
+ * @param fecha 
+ * @return
+ * @throws IOException
+ */
+	public boolean renombrarArchivo(String carpeta, String archivo, String nuevoNombre, Boolean fecha)  {
+
+		
+		String append;
+		if (fecha) {
+			append=fecha();
+		}
+		else 
+			append ="";
+		
+			
+		
+		File oldfile = new File(carpeta + archivo);
+		File newfile = new File( carpeta + append +nuevoNombre);
+		
+		
+		if (oldfile.renameTo(newfile)) {
+			System.out.println("archivo renombrado:"+carpeta+" "+newfile.getName());
+		} else {
+			System.out.println("error al renombrar "+carpeta+" "+newfile.getName());
+			return false;
+		}
+		return true;
+	}
+	
 	/**
 	 * 
 	 * @param carpeta
@@ -158,7 +193,7 @@ public class Archivo {
 	 * @return
 	 * @throws IOException
 	 */
-	private boolean renombrarArchivo(String carpeta, String archivo, String append) throws IOException {
+	public boolean renombrarArchivo(String carpeta, String archivo, String append) throws IOException {
 
 		File oldfile = new File(carpeta + archivo);
 		File newfile = new File( carpeta + append +archivo);
@@ -203,9 +238,14 @@ public class Archivo {
 	 * @return fecha actual
 	 */
 	public String fecha() {
+		
+		
+		
 		String fecha = "";
 		final Calendar c = Calendar.getInstance();
-		fecha = fecha + c.get(Calendar.YEAR) + c.get(Calendar.MONTH) + c.get(Calendar.DATE) + "-"
+		fecha = c.get(Calendar.YEAR) + "-" +
+				(c.get(Calendar.MONTH)+1) + "-"+
+				c.get(Calendar.DATE) + "-" +
 				+ c.get(Calendar.HOUR_OF_DAY) + c.get(Calendar.MINUTE) + c.get(Calendar.SECOND);
 		return fecha;
 	}
@@ -261,8 +301,8 @@ public class Archivo {
 		{
 			if (copy(propiedades.getCarpLocal(), propiedades.getCarpHistLocal())) {
 				borrardirectorio(new File(propiedades.getCarpLocal()));
-				renombrarArchivo(propiedades.getCarpHistLocal(), propiedades.getArchivoLocal());
-			    renombrarArchivo(propiedades.getCarpHistLocal(), propiedades.getArchivoLocal2());
+				renombrarArchivo(propiedades.getCarpHistLocal(), propiedades.getArchivoLocal(),propiedades.getArchivoDestino(),true);
+			    renombrarArchivo(propiedades.getCarpHistLocal(), propiedades.getArchivoLocal2(),propiedades.getArchivoDestino2(),true);
 				
 				
 			}
